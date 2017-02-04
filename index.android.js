@@ -56,8 +56,8 @@ export default class AwesomeProject extends Component {
       <MapView
                   provider={this.props.provider}
                   style={styles.map}
-                  scrollEnabled={false}
-                  zoomEnabled={false}
+                  scrollEnabled={true}
+                  zoomEnabled={true}
                   pitchEnabled={false}
                   rotateEnabled={false}
                   initialRegion={this.state.region}
