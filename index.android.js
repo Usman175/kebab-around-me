@@ -9,45 +9,69 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Dimensions,
   View
 } from 'react-native';
+import MapView from 'react-native-maps';
+
+const { width, height } = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
+const LATITUDE = 37.78825;
+const LONGITUDE = -122.4324;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+
+const styles = StyleSheet.create({
+  container: {
+   ...StyleSheet.absoluteFillObject,
+   justifyContent: 'flex-end',
+   alignItems: 'center',
+ },
+ map: {
+   ...StyleSheet.absoluteFillObject,
+ },
+});
 
 export default class AwesomeProject extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      region: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      },
+    };
+  }
+
   render() {
+    const { region } = this.props;
+    console.log(region);
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+
+      <MapView
+                  provider={this.props.provider}
+                  style={styles.map}
+                  scrollEnabled={false}
+                  zoomEnabled={false}
+                  pitchEnabled={false}
+                  rotateEnabled={false}
+                  initialRegion={this.state.region}
+                >
+                  <MapView.Marker
+                    image={require("./img/kebabPin.png")}
+                    title="This is a title"
+                    description="This is a description"
+                    coordinate={this.state.region}
+                  />
+      </MapView>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
