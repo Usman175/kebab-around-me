@@ -13,6 +13,7 @@ import {
   View
 } from 'react-native';
 import MapView from 'react-native-maps';
+import SplashScreen from 'react-native-splash-screen'
 
 const { width, height } = Dimensions.get('window');
 
@@ -34,6 +35,11 @@ const styles = StyleSheet.create({
 });
 
 export default class AwesomeProject extends Component {
+
+  componentDidMount() {
+      SplashScreen.hide();
+  }
+
   constructor(props) {
     super(props);
 
