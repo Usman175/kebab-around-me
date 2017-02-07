@@ -9,6 +9,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  StatusBar,
   Dimensions,
   View
 } from 'react-native';
@@ -58,23 +59,26 @@ export default class AwesomeProject extends Component {
     console.log(region);
     return (
       <View style={styles.container}>
-
-      <MapView
-                  provider={this.props.provider}
-                  style={styles.map}
-                  scrollEnabled={true}
-                  zoomEnabled={true}
-                  pitchEnabled={false}
-                  rotateEnabled={false}
-                  initialRegion={this.state.region}
-                >
-                  <MapView.Marker
-                    image={require("./img/kebabPin.png")}
-                    title="This is a title"
-                    description="This is a description"
-                    coordinate={this.state.region}
-                  />
-      </MapView>
+        <StatusBar
+        backgroundColor="#d76736"
+        barStyle="light-content"
+        />
+        <MapView
+                    provider={this.props.provider}
+                    style={styles.map}
+                    scrollEnabled={true}
+                    zoomEnabled={true}
+                    pitchEnabled={false}
+                    rotateEnabled={false}
+                    initialRegion={this.state.region}
+                  >
+                    <MapView.Marker
+                      image={require("./img/kebabPin.png")}
+                      title="This is a title"
+                      description="This is a description"
+                      coordinate={this.state.region}
+                    />
+        </MapView>
       </View>
     );
   }
