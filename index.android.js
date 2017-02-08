@@ -23,7 +23,32 @@ const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
+const markers = [
+  {
+    id: 0,
+    amount: 99,
+    coordinate: {
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    },
+  },
+  {
+    id: 1,
+    amount: 199,
+    coordinate: {
+    latitude: LATITUDE + 0.004,
+    longitude: LONGITUDE - 0.004,
+    },
+  },
+  {
+    id: 2,
+    amount: 285,
+    coordinate: {
+    latitude: LATITUDE - 0.004,
+    longitude: LONGITUDE - 0.004,
+    },
+  },
+];
 const styles = StyleSheet.create({
   container: {
    ...StyleSheet.absoluteFillObject,
@@ -51,6 +76,31 @@ export default class AwesomeProject extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
+
+      markers: [{
+        id: 0,
+        amount: 99,
+        coordinate: {
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        },
+      },
+      {
+        id: 1,
+        amount: 199,
+        coordinate: {
+        latitude: LATITUDE + 0.004,
+        longitude: LONGITUDE - 0.004,
+        },
+      },
+      {
+        id: 2,
+        amount: 285,
+        coordinate: {
+        latitude: LATITUDE - 0.004,
+        longitude: LONGITUDE - 0.004,
+        },
+      }]
     };
   }
 
@@ -70,14 +120,18 @@ export default class AwesomeProject extends Component {
                     zoomEnabled={true}
                     pitchEnabled={false}
                     rotateEnabled={false}
-                    initialRegion={this.state.region}
-                  >
-                    <MapView.Marker
-                      image={require("./img/kebabPin.png")}
-                      title="This is a title"
-                      description="This is a description"
-                      coordinate={this.state.region}
-                    />
+                    region={this.state.region}
+                    onRegionChange={this.onRegionChange}
+        >
+          {this.state.markers.map(marker => (
+
+              <MapView.Marker
+              image={{uri: "kebab_pin" + marker.id}}
+              coordinate={marker.coordinate}
+              title="This is a title"
+              description="This is a description"
+              />
+          ))}
         </MapView>
       </View>
     );
