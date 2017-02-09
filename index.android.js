@@ -25,7 +25,7 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const markers = [
   {
-    id: 0,
+    key: 0,
     amount: 99,
     coordinate: {
     latitude: LATITUDE,
@@ -33,7 +33,7 @@ const markers = [
     },
   },
   {
-    id: 1,
+    key: 1,
     amount: 199,
     coordinate: {
     latitude: LATITUDE + 0.004,
@@ -41,7 +41,7 @@ const markers = [
     },
   },
   {
-    id: 2,
+    key: 2,
     amount: 285,
     coordinate: {
     latitude: LATITUDE - 0.004,
@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
 export default class AwesomeProject extends Component {
 
   componentDidMount() {
+    setTimeout(() => {
       SplashScreen.hide();
+    },1500);
   }
 
   constructor(props) {
@@ -78,7 +80,7 @@ export default class AwesomeProject extends Component {
       },
 
       markers: [{
-        id: 0,
+        key: 0,
         amount: 99,
         coordinate: {
         latitude: LATITUDE,
@@ -86,7 +88,7 @@ export default class AwesomeProject extends Component {
         },
       },
       {
-        id: 1,
+        key: 1,
         amount: 199,
         coordinate: {
         latitude: LATITUDE + 0.004,
@@ -94,7 +96,7 @@ export default class AwesomeProject extends Component {
         },
       },
       {
-        id: 2,
+        key: 2,
         amount: 285,
         coordinate: {
         latitude: LATITUDE - 0.004,
@@ -126,7 +128,8 @@ export default class AwesomeProject extends Component {
           {this.state.markers.map(marker => (
 
               <MapView.Marker
-              image={{uri: "kebab_pin" + marker.id}}
+              key={marker.key}
+              image={{uri: "kebab_pin" + marker.key}}
               coordinate={marker.coordinate}
               title="This is a title"
               description="This is a description"
