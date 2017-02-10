@@ -13,7 +13,8 @@
     "react-native-mapbox-gl": "^5.1.0",
     "react-native-maps": "^0.12.4",
     "react-native-material-design": "^0.3.7",
-    "react-native-splash-screen": "^2.0.0"
+    "react-native-splash-screen": "^2.0.0",
+    "react-native-easy-grid": "~0.1.8"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

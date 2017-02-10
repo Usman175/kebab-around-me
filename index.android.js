@@ -11,10 +11,12 @@ import {
   Text,
   StatusBar,
   Dimensions,
+  ScrollView,
   View
 } from 'react-native';
 import MapView from 'react-native-maps';
 import SplashScreen from 'react-native-splash-screen'
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 const { width, height } = Dimensions.get('window');
 
@@ -111,31 +113,40 @@ export default class AwesomeProject extends Component {
     console.log(region);
     return (
       <View style={styles.container}>
-        <StatusBar
-        backgroundColor="#d76736"
-        barStyle="light-content"
-        />
-        <MapView
-                    provider={this.props.provider}
-                    style={styles.map}
-                    scrollEnabled={true}
-                    zoomEnabled={true}
-                    pitchEnabled={false}
-                    rotateEnabled={false}
-                    region={this.state.region}
-                    onRegionChange={this.onRegionChange}
-        >
-          {this.state.markers.map(marker => (
+        <Grid>
+          <StatusBar
+          backgroundColor="#d76736"
+          barStyle="light-content"
+          />
+          <Row size={4}>
+            <MapView
+                        provider={this.props.provider}
+                        style={styles.map}
+                        scrollEnabled={true}
+                        zoomEnabled={true}
+                        pitchEnabled={false}
+                        rotateEnabled={false}
+                        region={this.state.region}
+                        onRegionChange={this.onRegionChange}
+            >
+              {this.state.markers.map(marker => (
 
-              <MapView.Marker
-              key={marker.key}
-              image={{uri: "kebab_pin" + marker.key}}
-              coordinate={marker.coordinate}
-              title="This is a title"
-              description="This is a description"
-              />
-          ))}
-        </MapView>
+                  <MapView.Marker
+                  key={marker.key}
+                  image={{uri: "kebab_pin" + marker.key}}
+                  coordinate={marker.coordinate}
+                  title="This is a title"
+                  description="This is a description"
+                  />
+              ))}
+            </MapView>
+          </Row>
+          <Row size={1}>
+            <ScrollView horizontal={true}>
+              <Text style={{fontSize:80}}>TOUCHED LIKE NEVER CHANGE</Text>
+            </ScrollView>
+          </Row>
+        </Grid>
       </View>
     );
   }
