@@ -60,6 +60,15 @@ const styles = StyleSheet.create({
  map: {
    ...StyleSheet.absoluteFillObject,
  },
+ gold: {
+   backgroundColor: '#dda431'
+ },
+ silver: {
+   backgroundColor: '#949091'
+ },
+ bronze: {
+   backgroundColor: '#d27935'
+ },
 });
 
 export default class AwesomeProject extends Component {
@@ -143,7 +152,15 @@ export default class AwesomeProject extends Component {
           </Row>
           <Row size={1}>
             <ScrollView horizontal={true}>
-              <Text style={{fontSize:80}}>TOUCHED LIKE NEVER CHANGE</Text>
+              <Col style={styles.gold}>
+                <Text style={{fontSize:80}}>TOUCHED</Text>
+              </Col>
+              <Col style={styles.silver}>
+                <Text style={{fontSize:80}}>TOUCHED</Text>
+              </Col>
+              <Col style={styles.bronze}>
+                <Text style={{fontSize:80}}>TOUCHED</Text>
+              </Col>
             </ScrollView>
           </Row>
         </Grid>
