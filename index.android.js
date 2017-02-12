@@ -46,7 +46,7 @@ const markers = [
   {
     key: 0,
     amount: 99,
-    title: 'Favourites landscapes',
+    title: 'Mister Tacos',
     subtitle: 'Lorem ipsum dolor sit amet',
     illustration: 'http://i.imgur.com/SsJmZ9jl.jpg',
     coordinate: {
@@ -57,7 +57,7 @@ const markers = [
   {
     key: 1,
     amount: 199,
-    title: 'Favourites landscapes',
+    title: 'Master Tacos',
     subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
     illustration: 'http://i.imgur.com/5tj6S7Ol.jpg',
     coordinate: {
@@ -68,7 +68,7 @@ const markers = [
   {
     key: 2,
     amount: 285,
-    title: 'Favourites landscapes',
+    title: 'Hammamet',
     subtitle: 'Lorem ipsum dolor sit amet et nuncat',
     illustration: 'http://i.imgur.com/pmSqIFZl.jpg',
     coordinate: {
@@ -153,14 +153,12 @@ export default class AwesomeProject extends Component {
   _centerMapOnMarker (markerIndex) {
     const mapRef = this.map;
     const markerData = markers[markerIndex];
-    console.log(markerData);
-    console.log(mapRef);
 
     if (!markerData || !mapRef) {
         return;
     }
     mapRef.animateToRegion({
-        latitude: markerData.coordinate.latitude - CENTER_LAT_OFFSET,
+        latitude: markerData.coordinate.latitude,
         longitude: markerData.coordinate.longitude,
         latitudeDelta: 0.0315,
         longitudeDelta: 0.0258
@@ -206,7 +204,8 @@ export default class AwesomeProject extends Component {
             firstItem={1}
             inactiveSlideScale={0.94}
             inactiveSlideOpacity={0.6}
-            enableMomentum={true}
+            enableMomentum={false}
+            enableSnap={true}
             containerCustomStyle={styles.slider}
             contentContainerCustomStyle={styles.sliderContainer}
             showsHorizontalScrollIndicator={false}
