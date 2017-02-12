@@ -12,6 +12,7 @@ import {
   StatusBar,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
   View
 } from 'react-native';
 import MapView from 'react-native-maps';
@@ -20,6 +21,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
 import styles from './index.style';
+import Compass from './Compass';
 
 const { width, height } = Dimensions.get('window');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -42,41 +44,7 @@ const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const markers = [
-  {
-    key: 0,
-    amount: 99,
-    title: 'Mister Tacos',
-    subtitle: 'Lorem ipsum dolor sit amet',
-    illustration: 'http://i.imgur.com/SsJmZ9jl.jpg',
-    coordinate: {
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
-    },
-  },
-  {
-    key: 1,
-    amount: 199,
-    title: 'Master Tacos',
-    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-    illustration: 'http://i.imgur.com/5tj6S7Ol.jpg',
-    coordinate: {
-    latitude: LATITUDE + 0.004,
-    longitude: LONGITUDE - 0.004,
-    },
-  },
-  {
-    key: 2,
-    amount: 285,
-    title: 'Hammamet',
-    subtitle: 'Lorem ipsum dolor sit amet et nuncat',
-    illustration: 'http://i.imgur.com/pmSqIFZl.jpg',
-    coordinate: {
-    latitude: LATITUDE - 0.004,
-    longitude: LONGITUDE - 0.004,
-    },
-  },
-];
+const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
 
 const colors = {
     black: '#1a1917',
@@ -91,9 +59,25 @@ const entryBorderRadius = 5;
 export default class AwesomeProject extends Component {
 
   componentDidMount() {
+
+    navigator.geolocation.getCurrentPosition( (position) => {
+      var initialPosition = JSON.stringify(position);
+      this.setState({initialPosition});
+    }
+    , (error) => console.log(JSON.stringify(error)),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+    var lastPosition = JSON.stringify(position);
+    this.setState({lastPosition: {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude
+    }});
+    });
+
     setTimeout(() => {
       SplashScreen.hide();
-    },1500);
+    },2000);
   }
 
   getSlides (entries) {
@@ -112,47 +96,88 @@ export default class AwesomeProject extends Component {
       });
   }
 
+  rad(x) {
+    return x * Math.PI / 180;
+  }
+
+  getDistance(p1, p2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = this.rad(p2.latitude-p1.latitude);  // deg2rad below
+    var dLon = this.rad(p2.longitude-p1.longitude);
+    var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(this.rad(p1.latitude)) * Math.cos(this.rad(p2.latitude)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c; // Distance in km
+    return Math.round(d); // returns the distance in meter
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      region: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+
+      currentPosition: {lat: 0, lon: 0},
+      lastPosition: {
+        latitude: null,
+        longitude: null
       },
 
-      markers: [{
-        key: 0,
-        amount: 99,
-        coordinate: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
+      markers: [
+        {
+          key: 0,
+          amount: 99,
+          title: 'Mister Tacos',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
+          coordinate: {
+          latitude: 23,
+          longitude: 120.9935022,
+          },
         },
-      },
-      {
-        key: 1,
-        amount: 199,
-        coordinate: {
-        latitude: LATITUDE + 0.004,
-        longitude: LONGITUDE - 0.004,
+        {
+          key: 1,
+          amount: 199,
+          title: 'Master Tacos',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
+          coordinate: {
+          latitude: 24.7912387,
+          longitude: 122,
+          },
         },
-      },
-      {
-        key: 2,
-        amount: 285,
-        coordinate: {
-        latitude: LATITUDE - 0.004,
-        longitude: LONGITUDE - 0.004,
+        {
+          key: 2,
+          amount: 285,
+          title: 'Hammamet',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
+          coordinate: {
+          latitude: 25,
+          longitude: 120.9935022,
+          },
         },
-      }]
+      ]
     };
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  fitAllMarkers() {
+    this.map.fitToCoordinates([this.state.markers[0].coordinate, this.state.markers[1].coordinate, this.state.markers[2].coordinate], {
+      edgePadding: DEFAULT_PADDING,
+      animated: true,
+    });
+    console.log("fitToCoordinates : " + this.state.markers[0].coordinate);
   }
 
   _centerMapOnMarker (markerIndex) {
     const mapRef = this.map;
-    const markerData = markers[markerIndex];
+    const markerData = this.state.markers[markerIndex];
 
     if (!markerData || !mapRef) {
         return;
@@ -170,54 +195,57 @@ export default class AwesomeProject extends Component {
     console.log(region);
 
     return (
-      <View style={styles.container}>
-        <StatusBar
-        backgroundColor="#d76736"
-        barStyle="light-content"
-        />
-        <MapView
-          ref={ref => { this.map = ref; }}
-          provider={this.props.provider}
-          style={styles.map}
-          scrollEnabled={true}
-          zoomEnabled={true}
-          pitchEnabled={false}
-          rotateEnabled={false}
-          region={this.state.region}
-          onRegionChange={this.onRegionChange}
-        >
-          {this.state.markers.map(marker => (
-
-              <MapView.Marker
-              key={marker.key}
-              image={{uri: "kebab_pin" + marker.key}}
-              coordinate={marker.coordinate}
-              title="This is a title"
-              description="This is a description"
+      <Grid>
+        <View style={styles.container}>
+          <StatusBar
+          backgroundColor="#d76736"
+          barStyle="light-content"
+          />
+          <Row style={styles.listContainer}>
+            <Col size={4}>
+              <Text style={styles.listTitle}>{this.state.markers[0].title}</Text>
+              <Text>GPS: {this.state.lastPosition.latitude} , {this.state.lastPosition.longitude}</Text>
+              <Text style={styles.listSubtitle}>{this.state.markers[0].coordinate.latitude} , {this.state.markers[0].coordinate.longitude}</Text>
+            </Col>
+            <Col size={1}>
+              <Compass fromLat={this.state.lastPosition.latitude}
+                fromLon={this.state.lastPosition.longitude}
+                toLat={this.state.markers[0].coordinate.latitude}
+                toLon={this.state.markers[0].coordinate.longitude}
               />
-          ))}
-        </MapView>
-        <View>
-          <Carousel
-            sliderWidth={sliderWidth}
-            itemWidth={itemWidth}
-            firstItem={1}
-            inactiveSlideScale={0.94}
-            inactiveSlideOpacity={0.6}
-            enableMomentum={false}
-            enableSnap={true}
-            containerCustomStyle={styles.slider}
-            contentContainerCustomStyle={styles.sliderContainer}
-            showsHorizontalScrollIndicator={false}
-            snapOnAndroid={true}
-            removeClippedSubviews={false}
-            style={styles.carousel}
-            onSnapToItem={(index, markers) => this._centerMapOnMarker(index)}
-          >
-            { this.getSlides(markers) }
-          </Carousel>
+              <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[0].coordinate)}m</Text>
+            </Col>
+          </Row>
+          <Row style={styles.listContainer}>
+            <Col size={4}>
+              <Text style={styles.listTitle}>{this.state.markers[1].title}</Text>
+              <Text style={styles.listSubtitle}>{this.state.markers[1].coordinate.latitude} , {this.state.markers[1].coordinate.longitude}</Text>
+            </Col>
+            <Col size={1}>
+              <Compass fromLat={this.state.lastPosition.latitude}
+                fromLon={this.state.lastPosition.longitude}
+                toLat={this.state.markers[1].coordinate.latitude}
+                toLon={this.state.markers[1].coordinate.longitude}
+              />
+              <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+            </Col>
+          </Row>
+          <Row style={styles.listContainer}>
+            <Col size={4}>
+              <Text style={styles.listTitle}>{this.state.markers[2].title}</Text>
+              <Text style={styles.listSubtitle}>{this.state.markers[2].coordinate.latitude} , {this.state.markers[2].coordinate.longitude}</Text>
+            </Col>
+            <Col size={1}>
+              <Compass fromLat={this.state.lastPosition.latitude}
+                fromLon={this.state.lastPosition.longitude}
+                toLat={this.state.markers[2].coordinate.latitude}
+                toLon={this.state.markers[2].coordinate.longitude}
+              />
+              <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[2].coordinate)}m</Text>
+            </Col>
+          </Row>
         </View>
-      </View>
+      </Grid>
     );
   }
 }

@@ -15,14 +15,34 @@ export default StyleSheet.create({
     container: {
         backgroundColor: colors.background1,
         flex: 1,
-        flexDirection: 'column-reverse'
+        flexDirection: 'column'
     },
     colorsContainer: {
         ...StyleSheet.absoluteFillObject,
         flexDirection: 'row'
     },
+    listContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 20
+    },
+    separator: {
+      flex: 1,
+      height: StyleSheet.hairlineWidth,
+      backgroundColor: '#FFFFFF',
+    },
     carousel: {
       flex: 0
+    },
+    listTitle: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: '#FFFFFF'
+    },
+
+    listSubtitle: {
+      fontSize: 14,
     },
     color1: {
         flex: 1,
