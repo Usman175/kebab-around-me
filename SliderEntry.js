@@ -15,7 +15,7 @@ export default class SliderEntry extends Component {
         const { title, subtitle, illustration, even } = this.props;
 
         const uppercaseTitle = title ? (
-            <Text style={[styles.title, even ? styles.titleEven : {}]} numberOfLines={2}>{ title.toUpperCase() }</Text>
+            <Text style={styles.title} numberOfLines={2}>{ title.toUpperCase() }</Text>
         ) : false;
 
         return (
@@ -24,16 +24,16 @@ export default class SliderEntry extends Component {
               style={styles.slideInnerContainer}
               onPress={() => { alert(`You've clicked '${title}'`); }}
               >
-                <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
+                <View style={styles.imageContainer}>
                     <Image
                       source={{ uri: illustration }}
                       style={styles.image}
                     />
-                    <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
+                    <View style={styles.radiusMask} />
                 </View>
-                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
+                <View style={styles.textContainer}>
                     { uppercaseTitle }
-                    <Text style={[styles.subtitle, even ? styles.subtitleEven : {}]} numberOfLines={2}>{ subtitle }</Text>
+                    <Text style={styles.subtitle} numberOfLines={2}>{ subtitle }</Text>
                 </View>
             </TouchableOpacity>
         );

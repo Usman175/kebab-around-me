@@ -37,6 +37,7 @@ export const itemHorizontalMargin = wp(2);
 export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 
 const ASPECT_RATIO = width / height;
+const CENTER_LAT_OFFSET = 0;
 const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
@@ -85,134 +86,7 @@ const colors = {
 };
 
 
-const entryBorderRadius = 8;
-
-/*const styles = StyleSheet.create({
-  container: {
-   ...StyleSheet.absoluteFillObject,
-   justifyContent: 'flex-end',
-   alignItems: 'center',
- },
- map: {
-   ...StyleSheet.absoluteFillObject,
- },
- gold: {
-   backgroundColor: '#dda431'
- },
- silver: {
-   backgroundColor: '#949091'
- },
- bronze: {
-   backgroundColor: '#d27935'
- },
- container: {
-     flex: 1,
-     backgroundColor: colors.background1
- },
- colorsContainer: {
-     ...StyleSheet.absoluteFillObject,
-     flexDirection: 'row'
- },
- color1: {
-     flex: 1,
-     backgroundColor: colors.background1
- },
- color2: {
-     flex: 1,
-     backgroundColor: colors.background2
- },
- scrollview: {
-     flex: 1,
-     paddingTop: 50
- },
- title: {
-     marginTop: 15,
-     backgroundColor: 'transparent',
-     color: 'rgba(255, 255, 255, 0.9)',
-     fontSize: 22,
-     fontWeight: 'bold',
-     textAlign: 'center'
- },
- subtitle: {
-     marginTop: 5,
-     marginBottom: 15,
-     backgroundColor: 'transparent',
-     color: 'rgba(255, 255, 255, 0.75)',
-     fontSize: 16,
-     fontStyle: 'italic',
-     textAlign: 'center'
- },
- slider: {
-     marginBottom: 30
- },
- slide: {
- },
- sliderContainer: {
- },
- slideInnerContainer: {
-    width: itemWidth,
-    height: slideHeight,
-    paddingHorizontal: itemHorizontalMargin,
-    paddingBottom: 18 // needed for shadow
-},
-imageContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
-},
-imageContainerEven: {
-    backgroundColor: colors.black
-},
-image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
-    borderTopLeftRadius: entryBorderRadius,
-    borderTopRightRadius: entryBorderRadius
-},
-// image's border radius is buggy on ios; let's hack it!
-radiusMask: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: entryBorderRadius,
-    backgroundColor: 'white'
-},
-radiusMaskEven: {
-    backgroundColor: colors.black
-},
-textContainer: {
-    justifyContent: 'center',
-    paddingTop: 20 - entryBorderRadius,
-    paddingBottom: 20,
-    paddingHorizontal: 16,
-    backgroundColor: 'white',
-    borderBottomLeftRadius: entryBorderRadius,
-    borderBottomRightRadius: entryBorderRadius
-},
-textContainerEven: {
-    backgroundColor: colors.black
-},
-title: {
-    color: colors.black,
-    fontSize: 13,
-    fontWeight: 'bold',
-    letterSpacing: 0.5
-},
-titleEven: {
-    color: 'white'
-},
-subtitle: {
-    marginTop: 6,
-    color: colors.gray,
-    fontSize: 12,
-    fontStyle: 'italic'
-},
-subtitleEven: {
-    color: 'rgba(255, 255, 255, 0.7)'
-}
-});*/
+const entryBorderRadius = 5;
 
 export default class AwesomeProject extends Component {
 
@@ -277,15 +151,17 @@ export default class AwesomeProject extends Component {
   }
 
   _centerMapOnMarker (markerIndex) {
-    const mapRef = this._mapView;
-    const markerData = marker[markerIndex];
+    const mapRef = this.map;
+    const markerData = markers[markerIndex];
+    console.log(markerData);
+    console.log(mapRef);
 
     if (!markerData || !mapRef) {
         return;
     }
     mapRef.animateToRegion({
-        latitude: markerData.geolocation.latitude - CENTER_LAT_OFFSET,
-        longitude: markerData.geolocation.longitude,
+        latitude: markerData.coordinate.latitude - CENTER_LAT_OFFSET,
+        longitude: markerData.coordinate.longitude,
         latitudeDelta: 0.0315,
         longitudeDelta: 0.0258
     });
@@ -302,6 +178,7 @@ export default class AwesomeProject extends Component {
         barStyle="light-content"
         />
         <MapView
+          ref={ref => { this.map = ref; }}
           provider={this.props.provider}
           style={styles.map}
           scrollEnabled={true}
@@ -336,6 +213,7 @@ export default class AwesomeProject extends Component {
             snapOnAndroid={true}
             removeClippedSubviews={false}
             style={styles.carousel}
+            onSnapToItem={(index, markers) => this._centerMapOnMarker(index)}
           >
             { this.getSlides(markers) }
           </Carousel>
