@@ -9,7 +9,9 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Image,
   StatusBar,
+  ListView,
   Dimensions,
   ScrollView,
   TouchableOpacity,
@@ -22,6 +24,7 @@ import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
 import styles from './index.style';
 import Compass from './Compass';
+import Swipeable from 'react-native-swipeable';
 
 const { width, height } = Dimensions.get('window');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -52,6 +55,9 @@ const colors = {
     background1: 'hsl(15, 55%, 50%)',
     background2: 'hsl(230, 30%, 45%)'
 };
+
+
+
 
 
 const entryBorderRadius = 5;
@@ -131,6 +137,7 @@ export default class AwesomeProject extends Component {
           amount: 99,
           title: 'Mister Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          opening: 'Mon. to Sat, 9:00 - 19:00',
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
           coordinate: {
           latitude: 23,
@@ -142,6 +149,7 @@ export default class AwesomeProject extends Component {
           amount: 199,
           title: 'Master Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          opening: 'Mon. to Fri, 8:00 - 19:30',
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
           latitude: 24.7912387,
@@ -153,6 +161,7 @@ export default class AwesomeProject extends Component {
           amount: 285,
           title: 'Hammamet',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          opening: 'Mon. to Sun, 8:00 - 20:00',
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
           coordinate: {
           latitude: 25,
@@ -192,60 +201,109 @@ export default class AwesomeProject extends Component {
 
   render() {
     const { region } = this.props;
-    console.log(region);
 
     return (
-      <Grid>
-        <View style={styles.container}>
-          <StatusBar
-          backgroundColor="#d76736"
-          barStyle="light-content"
-          />
-          <Row style={styles.listContainer}>
-            <Col size={4}>
-              <Text style={styles.listTitle}>{this.state.markers[0].title}</Text>
-              <Text>GPS: {this.state.lastPosition.latitude} , {this.state.lastPosition.longitude}</Text>
-              <Text style={styles.listSubtitle}>{this.state.markers[0].coordinate.latitude} , {this.state.markers[0].coordinate.longitude}</Text>
-            </Col>
-            <Col size={1}>
-              <Compass fromLat={this.state.lastPosition.latitude}
-                fromLon={this.state.lastPosition.longitude}
-                toLat={this.state.markers[0].coordinate.latitude}
-                toLon={this.state.markers[0].coordinate.longitude}
-              />
-              <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[0].coordinate)}m</Text>
-            </Col>
-          </Row>
-          <Row style={styles.listContainer}>
-            <Col size={4}>
-              <Text style={styles.listTitle}>{this.state.markers[1].title}</Text>
-              <Text style={styles.listSubtitle}>{this.state.markers[1].coordinate.latitude} , {this.state.markers[1].coordinate.longitude}</Text>
-            </Col>
-            <Col size={1}>
-              <Compass fromLat={this.state.lastPosition.latitude}
-                fromLon={this.state.lastPosition.longitude}
-                toLat={this.state.markers[1].coordinate.latitude}
-                toLon={this.state.markers[1].coordinate.longitude}
-              />
-              <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
-            </Col>
-          </Row>
-          <Row style={styles.listContainer}>
-            <Col size={4}>
-              <Text style={styles.listTitle}>{this.state.markers[2].title}</Text>
-              <Text style={styles.listSubtitle}>{this.state.markers[2].coordinate.latitude} , {this.state.markers[2].coordinate.longitude}</Text>
-            </Col>
-            <Col size={1}>
-              <Compass fromLat={this.state.lastPosition.latitude}
-                fromLon={this.state.lastPosition.longitude}
-                toLat={this.state.markers[2].coordinate.latitude}
-                toLon={this.state.markers[2].coordinate.longitude}
-              />
-              <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[2].coordinate)}m</Text>
-            </Col>
-          </Row>
+      <View style={styles.container}>
+        <Swipeable
+        leftContent={(
+          <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
+            <Text>Pull action</Text>
+          </View>
+        )}
+        rightButtons={[
+          <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
+            <Text>1</Text>
+          </TouchableOpacity>,
+          <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
+            <Text>2</Text>
+          </TouchableOpacity>
+        ]}
+      >
+      <View style={[styles.listItem, {backgroundColor: '#FBB91A'}]}>
+
+          <View><Text style={styles.listTitle}>{this.state.markers[0].title}</Text></View>
+          <View><Text style={styles.listSubtitle}>{this.state.markers[0].opening}</Text></View>
+
+          <View>
+            <Compass fromLat={this.state.lastPosition.latitude}
+              fromLon={this.state.lastPosition.longitude}
+              toLat={this.state.markers[0].coordinate.latitude}
+              toLon={this.state.markers[0].coordinate.longitude}
+            />
+          </View>
+          <View>
+            <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+          </View>
+      </View>
+      </Swipeable>
+
+      <Swipeable
+      leftContent={(
+        <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
+          <Text>Pull action</Text>
         </View>
-      </Grid>
+      )}
+      rightButtons={[
+        <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
+          <Text>1</Text>
+        </TouchableOpacity>,
+        <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
+          <Text>2</Text>
+        </TouchableOpacity>
+      ]}
+    >
+      <View style={[styles.listItem, {backgroundColor: '#A0BBC5'}]}>
+
+          <View><Text style={styles.listTitle}>{this.state.markers[1].title}</Text></View>
+          <View><Text style={styles.listSubtitle}>{this.state.markers[1].opening}</Text></View>
+
+          <View>
+            <Compass fromLat={this.state.lastPosition.latitude}
+              fromLon={this.state.lastPosition.longitude}
+              toLat={this.state.markers[1].coordinate.latitude}
+              toLon={this.state.markers[1].coordinate.longitude}
+            />
+          </View>
+          <View>
+            <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+          </View>
+      </View>
+    </Swipeable>
+
+    <Swipeable
+    leftContent={(
+      <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
+        <Text>Pull action</Text>
+      </View>
+    )}
+    rightButtons={[
+      <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
+        <Text>1</Text>
+      </TouchableOpacity>,
+      <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
+        <Text>2</Text>
+      </TouchableOpacity>
+    ]}
+  >
+
+    <View style={[styles.listItem, {backgroundColor: '#EB8E5B'}]}>
+
+        <View><Text style={styles.listTitle}>{this.state.markers[2].title}</Text></View>
+        <View><Text style={styles.listSubtitle}>{this.state.markers[2].opening}</Text></View>
+
+        <View>
+          <Compass fromLat={this.state.lastPosition.latitude}
+            fromLon={this.state.lastPosition.longitude}
+            toLat={this.state.markers[2].coordinate.latitude}
+            toLon={this.state.markers[2].coordinate.longitude}
+          />
+        </View>
+        <View>
+          <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[2].coordinate)}m</Text>
+        </View>
+    </View>
+  </Swipeable>
+</View>
     );
   }
 }

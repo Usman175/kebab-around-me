@@ -11,6 +11,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.airbnb.android.react.maps.MapsPackage;
+import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.joshblour.reactnativeheading.ReactNativeHeadingPackage;
 
 import java.util.Arrays;
@@ -28,8 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SplashScreenReactPackage(),
+          new SplashScreenReactPackage(),
           new MapsPackage(),
+          new ExtraDimensionsPackage(),
           new ReactNativeHeadingPackage()
       );
     }

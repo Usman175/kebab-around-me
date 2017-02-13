@@ -2,6 +2,7 @@ package com.awesomeproject;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
+import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.cboy.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
