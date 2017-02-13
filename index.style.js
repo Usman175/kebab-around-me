@@ -1,9 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export const colors = {
     black: '#1a1917',
     gray: '#888888',
-    background1: 'hsl(15, 55%, 50%)',
+    gold: '#FBB91A',
+    silver: '#A0BBC5',
+    bronze: '#EB8E5B',
+    background1: '#d76736',
     background2: 'hsl(230, 30%, 45%)'
 };
 
@@ -13,34 +18,70 @@ export default StyleSheet.create({
       flex: 1
     },
     container: {
-        backgroundColor: colors.background1,
-        flex: 1,
-        flexDirection: 'column'
+      flex: 1,
+      //paddingTop: 20
+    },
+    listItem: {
+      height: height*0.3333,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    leftSwipeItem: {
+      flex: 1,
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      paddingRight: 20
+    },
+    rightSwipeItem: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingLeft: 20
+    },
+    card : {
+      width: 300,
+      height: 180,
+      backgroundColor: 'red',
+      borderRadius: 8,
+      marginVertical: 6,
+      borderWidth: 0.5
     },
     colorsContainer: {
         ...StyleSheet.absoluteFillObject,
         flexDirection: 'row'
     },
     listContainer: {
-      flex: 1,
+      backgroundColor: '#fff',
+      margin: 10,
+      borderRadius: 8,
+      borderBottomColor: '#d76736',
+      borderBottomWidth: 1,
       justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 20
+      paddingHorizontal: 20,
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'center'
     },
-    separator: {
-      flex: 1,
-      height: StyleSheet.hairlineWidth,
-      backgroundColor: '#FFFFFF',
+    listPadding: {
+      paddingHorizontal: 10
+    },
+    listSeparator: {
+      borderBottomColor: '#EEEEEE',
+      borderBottomWidth: 1
     },
     carousel: {
       flex: 0
     },
-    listTitle: {
-      fontSize: 32,
-      fontWeight: 'bold',
-      color: '#FFFFFF'
+    compassText: {
+      color: "#fff"
     },
-
+    listTitle: {
+      fontSize: 36,
+      fontWeight: 'bold',
+      color: '#fff'
+    },
+    rowBack: {
+      backgroundColor: 'transparent'
+    },
     listSubtitle: {
       fontSize: 14,
     },
@@ -59,7 +100,7 @@ export default StyleSheet.create({
     title: {
         marginTop: 15,
         backgroundColor: 'transparent',
-        color: 'rgba(255, 255, 255, 0.9)',
+        color: '#d76736',
         fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center'
@@ -68,7 +109,7 @@ export default StyleSheet.create({
         marginTop: 5,
         marginBottom: 15,
         backgroundColor: 'transparent',
-        color: 'rgba(255, 255, 255, 0.75)',
+        color: '#d76736',
         fontSize: 16,
         fontStyle: 'italic',
         textAlign: 'center'

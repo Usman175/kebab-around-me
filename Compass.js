@@ -103,8 +103,8 @@ export default class Compass extends Component {
 
 const styles = StyleSheet.create({
   compass: {
-    width: 32,
-    height: 32
+    width: 36,
+    height: 36
   }
 });
 
