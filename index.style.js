@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,9 +23,10 @@ export default StyleSheet.create({
       //paddingTop: 20
     },
     listItem: {
-      height: height*0.3333,
+      height: ExtraDimensions.get('REAL_WINDOW_HEIGHT')*0.32,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      padding: 20
     },
     leftSwipeItem: {
       flex: 1,
@@ -62,7 +64,10 @@ export default StyleSheet.create({
       justifyContent:'center'
     },
     listPadding: {
-      paddingHorizontal: 10
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     listSeparator: {
       borderBottomColor: '#EEEEEE',
@@ -71,10 +76,17 @@ export default StyleSheet.create({
     carousel: {
       flex: 0
     },
+
+    compass: {
+      textAlign: 'center'
+    },
+
     compassText: {
-      color: "#fff"
+      color: "#fff",
+      fontSize: 14
     },
     listTitle: {
+      fontFamily: 'Helvetica',
       fontSize: 36,
       fontWeight: 'bold',
       color: '#fff'

@@ -25,6 +25,8 @@ import SliderEntry from './SliderEntry';
 import styles from './index.style';
 import Compass from './Compass';
 import Swipeable from 'react-native-swipeable';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import Communications from 'react-native-communications';
 
 const { width, height } = Dimensions.get('window');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -126,6 +128,8 @@ export default class AwesomeProject extends Component {
     this.state = {
 
       currentPosition: {lat: 0, lon: 0},
+      rightActionActivated: false,
+      toggle: false,
       lastPosition: {
         latitude: null,
         longitude: null
@@ -138,6 +142,7 @@ export default class AwesomeProject extends Component {
           title: 'Mister Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'Mon. to Sat, 9:00 - 19:00',
+          phone: '0975123456',
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
           coordinate: {
           latitude: 23,
@@ -150,6 +155,7 @@ export default class AwesomeProject extends Component {
           title: 'Master Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'Mon. to Fri, 8:00 - 19:30',
+          phone: '0975123456',
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
           latitude: 24.7912387,
@@ -162,6 +168,7 @@ export default class AwesomeProject extends Component {
           title: 'Hammamet',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'Mon. to Sun, 8:00 - 20:00',
+          phone: '0975123456',
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
           coordinate: {
           latitude: 25,
@@ -200,6 +207,7 @@ export default class AwesomeProject extends Component {
   }
 
   render() {
+    const {rightActionActivated, toggle} = this.state;
     const { region } = this.props;
 
     return (
@@ -220,10 +228,12 @@ export default class AwesomeProject extends Component {
         ]}
       >
       <View style={[styles.listItem, {backgroundColor: '#FBB91A'}]}>
-
+        <View style={styles.listPadding}>
           <View><Text style={styles.listTitle}>{this.state.markers[0].title}</Text></View>
           <View><Text style={styles.listSubtitle}>{this.state.markers[0].opening}</Text></View>
+        </View>
 
+        <View style={styles.listPadding}>
           <View>
             <Compass fromLat={this.state.lastPosition.latitude}
               fromLon={this.state.lastPosition.longitude}
@@ -232,8 +242,9 @@ export default class AwesomeProject extends Component {
             />
           </View>
           <View>
-            <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[0].coordinate)}m</Text>
           </View>
+        </View>
       </View>
       </Swipeable>
 
@@ -253,10 +264,12 @@ export default class AwesomeProject extends Component {
       ]}
     >
       <View style={[styles.listItem, {backgroundColor: '#A0BBC5'}]}>
-
+        <View style={styles.listPadding}>
           <View><Text style={styles.listTitle}>{this.state.markers[1].title}</Text></View>
           <View><Text style={styles.listSubtitle}>{this.state.markers[1].opening}</Text></View>
+        </View>
 
+        <View style={styles.listPadding}>
           <View>
             <Compass fromLat={this.state.lastPosition.latitude}
               fromLon={this.state.lastPosition.longitude}
@@ -265,32 +278,44 @@ export default class AwesomeProject extends Component {
             />
           </View>
           <View>
-            <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
           </View>
+        </View>
       </View>
     </Swipeable>
 
     <Swipeable
-    leftContent={(
-      <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
-        <Text>Pull action</Text>
-      </View>
-    )}
-    rightButtons={[
-      <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
-        <Text>1</Text>
+
+        onRightActionActivate={() => this.setState({rightActionActivated: true})}
+        onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
+        onRightActionComplete={() => this.setState({toggle: !toggle})}
+        onRightActionRelease={() => Communications.phonecall('0975422144', true)}
+        rightActionActivationDistance={200}
+        rightContent={(
+          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? 'steelblue' : '#78DCAA'}]}>
+            {rightActionActivated ?
+              <Icon name="phone" size={32} color="#fff" /> :
+              <Icon name="phone" size={32} color="#fff" />}
+          </View>
+        )}
+
+    leftButtons={[
+      <TouchableOpacity style={[styles.leftSwipeItem, {backgroundColor: '#78DCAA'}]}>
+      <Icon name="phone" size={32} color="#fff" />
       </TouchableOpacity>,
-      <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
-        <Text>2</Text>
+      <TouchableOpacity style={[styles.leftSwipeItem, {backgroundColor: '#D92531'}]}>
+        <Icon name="heart" size={32} color="#fff" />
       </TouchableOpacity>
     ]}
   >
 
     <View style={[styles.listItem, {backgroundColor: '#EB8E5B'}]}>
-
+      <View style={styles.listPadding}>
         <View><Text style={styles.listTitle}>{this.state.markers[2].title}</Text></View>
         <View><Text style={styles.listSubtitle}>{this.state.markers[2].opening}</Text></View>
+      </View>
 
+      <View style={styles.listPadding}>
         <View>
           <Compass fromLat={this.state.lastPosition.latitude}
             fromLon={this.state.lastPosition.longitude}
@@ -299,8 +324,9 @@ export default class AwesomeProject extends Component {
           />
         </View>
         <View>
-          <Text style={styles.listSubtitle}>{this.getDistance(this.state.lastPosition,this.state.markers[2].coordinate)}m</Text>
+          <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[2].coordinate)}m</Text>
         </View>
+      </View>
     </View>
   </Swipeable>
 </View>
