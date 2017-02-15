@@ -24,9 +24,7 @@ export default StyleSheet.create({
     },
     listItem: {
       height: ExtraDimensions.get('REAL_WINDOW_HEIGHT')*0.32,
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 20
+      padding: 30
     },
     leftSwipeItem: {
       flex: 1,
@@ -38,6 +36,10 @@ export default StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       paddingLeft: 20
+    },
+
+    opening: {
+      color: '#fff'
     },
     card : {
       width: 300,
@@ -69,25 +71,31 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    listSeparator: {
-      borderBottomColor: '#EEEEEE',
-      borderBottomWidth: 1
-    },
+
     carousel: {
       flex: 0
     },
-
     compass: {
-      textAlign: 'center'
+      flex:1,
+      flexDirection:'row',
+      justifyContent:'flex-end',
+      alignItems: 'center'
+    },
+
+    rating: {
+      flex:1,
+      flexDirection:'row',
+      justifyContent:'flex-end',
+      alignItems: 'flex-end',
     },
 
     compassText: {
       color: "#fff",
-      fontSize: 14
+      fontSize: 16
     },
     listTitle: {
       fontFamily: 'Helvetica',
-      fontSize: 36,
+      fontSize: 32,
       fontWeight: 'bold',
       color: '#fff'
     },
@@ -95,8 +103,12 @@ export default StyleSheet.create({
       backgroundColor: 'transparent'
     },
     listSubtitle: {
-      fontSize: 14,
+      fontSize: 16,
+      color: "#fff",
+      position: 'absolute',
+      bottom: 0
     },
+
     color1: {
         flex: 1,
         backgroundColor: colors.background1

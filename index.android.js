@@ -141,7 +141,7 @@ export default class AwesomeProject extends Component {
           amount: 99,
           title: 'Mister Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'Mon. to Sat, 9:00 - 19:00',
+          opening: 'open',
           phone: '0975123456',
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
           coordinate: {
@@ -154,7 +154,7 @@ export default class AwesomeProject extends Component {
           amount: 199,
           title: 'Master Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'Mon. to Fri, 8:00 - 19:30',
+          opening: 'close',
           phone: '0975123456',
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
@@ -167,7 +167,7 @@ export default class AwesomeProject extends Component {
           amount: 285,
           title: 'Hammamet',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'Mon. to Sun, 8:00 - 20:00',
+          opening: 'open',
           phone: '0975123456',
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
           coordinate: {
@@ -227,26 +227,34 @@ export default class AwesomeProject extends Component {
           </TouchableOpacity>
         ]}
       >
-      <View style={[styles.listItem, {backgroundColor: '#FBB91A'}]}>
-        <View style={styles.listPadding}>
-          <View><Text style={styles.listTitle}>{this.state.markers[0].title}</Text></View>
-          <View><Text style={styles.listSubtitle}>{this.state.markers[0].opening}</Text></View>
-        </View>
-
-        <View style={styles.listPadding}>
-          <View>
-            <Compass fromLat={this.state.lastPosition.latitude}
-              fromLon={this.state.lastPosition.longitude}
-              toLat={this.state.markers[0].coordinate.latitude}
-              toLon={this.state.markers[0].coordinate.longitude}
-            />
-          </View>
-          <View>
-            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[0].coordinate)}m</Text>
-          </View>
-        </View>
+        <View style={[styles.listItem, {backgroundColor: '#FBB91A'}]}>
+          <Grid>
+            <Row>
+              <Col size={3}>
+                <Text style={styles.listTitle}>{this.state.markers[0].title}</Text>
+                <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[0].coordinate)}m</Text>
+              </Col>
+              <Col size={1}>
+                <View style={styles.compass}>
+                <Compass
+                  fromLat={this.state.lastPosition.latitude}
+                  fromLon={this.state.lastPosition.longitude}
+                  toLat={this.state.markers[0].coordinate.latitude}
+                  toLon={this.state.markers[0].coordinate.longitude}
+                />
+                </View>
+              </Col>
+            </Row>
+          <Row>
+            <Col size={3}>
+              <Text style={styles.listSubtitle}>{this.state.markers[0].opening.toUpperCase()}</Text>
+            </Col>
+            <Col size={1}>
+            </Col>
+          </Row>
+        </Grid>
       </View>
-      </Swipeable>
+    </Swipeable>
 
       <Swipeable
       leftContent={(
@@ -263,25 +271,33 @@ export default class AwesomeProject extends Component {
         </TouchableOpacity>
       ]}
     >
-      <View style={[styles.listItem, {backgroundColor: '#A0BBC5'}]}>
-        <View style={styles.listPadding}>
-          <View><Text style={styles.listTitle}>{this.state.markers[1].title}</Text></View>
-          <View><Text style={styles.listSubtitle}>{this.state.markers[1].opening}</Text></View>
-        </View>
-
-        <View style={styles.listPadding}>
-          <View>
-            <Compass fromLat={this.state.lastPosition.latitude}
+    <View style={[styles.listItem, {backgroundColor: '#A0BBC5'}]}>
+      <Grid>
+        <Row>
+          <Col size={3}>
+            <Text style={styles.listTitle}>{this.state.markers[1].title}</Text>
+            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+          </Col>
+          <Col size={1}>
+            <View style={styles.compass}>
+            <Compass
+              fromLat={this.state.lastPosition.latitude}
               fromLon={this.state.lastPosition.longitude}
               toLat={this.state.markers[1].coordinate.latitude}
               toLon={this.state.markers[1].coordinate.longitude}
             />
-          </View>
-          <View>
-            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
-          </View>
-        </View>
-      </View>
+            </View>
+          </Col>
+        </Row>
+      <Row>
+        <Col size={3}>
+          <Text style={styles.listSubtitle}>{this.state.markers[1].opening.toUpperCase()}</Text>
+        </Col>
+        <Col size={1}>
+        </Col>
+      </Row>
+    </Grid>
+  </View>
     </Swipeable>
 
     <Swipeable
@@ -310,23 +326,31 @@ export default class AwesomeProject extends Component {
   >
 
     <View style={[styles.listItem, {backgroundColor: '#EB8E5B'}]}>
-      <View style={styles.listPadding}>
-        <View><Text style={styles.listTitle}>{this.state.markers[2].title}</Text></View>
-        <View><Text style={styles.listSubtitle}>{this.state.markers[2].opening}</Text></View>
-      </View>
-
-      <View style={styles.listPadding}>
-        <View>
-          <Compass fromLat={this.state.lastPosition.latitude}
+    <Grid>
+      <Row>
+        <Col size={3}>
+          <Text style={styles.listTitle}>{this.state.markers[2].title}</Text>
+          <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
+        </Col>
+        <Col size={1}>
+          <View style={styles.compass}>
+          <Compass
+            fromLat={this.state.lastPosition.latitude}
             fromLon={this.state.lastPosition.longitude}
             toLat={this.state.markers[2].coordinate.latitude}
             toLon={this.state.markers[2].coordinate.longitude}
           />
-        </View>
-        <View>
-          <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[2].coordinate)}m</Text>
-        </View>
-      </View>
+          </View>
+        </Col>
+      </Row>
+    <Row>
+      <Col size={3}>
+        <Text style={styles.listSubtitle}>{this.state.markers[2].opening.toUpperCase()}</Text>
+      </Col>
+      <Col size={1}>
+      </Col>
+    </Row>
+  </Grid>
     </View>
   </Swipeable>
 </View>
