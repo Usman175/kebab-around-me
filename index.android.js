@@ -50,17 +50,10 @@ const LONGITUDE = -122.4324;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
-
 const colors = {
-    black: '#1a1917',
-    gray: '#888888',
-    background1: 'hsl(15, 55%, 50%)',
-    background2: 'hsl(230, 30%, 45%)'
-};
-
-
-
-
+    gold: '#FBB91A',
+    silver: '#A0BBC5',
+    bronze: '#EB8E5B'}
 
 const entryBorderRadius = 5;
 
@@ -85,7 +78,7 @@ export default class AwesomeProject extends Component {
 
     setTimeout(() => {
       SplashScreen.hide();
-    },2000);
+    },1500);
   }
 
   getSlides (entries) {
@@ -230,7 +223,7 @@ export default class AwesomeProject extends Component {
           </TouchableOpacity>
         ]}
       >
-        <View style={[styles.listItem, {backgroundColor: '#FBB91A'}]}>
+        <View style={[styles.listItem, {backgroundColor: colors.gold}]}>
           <Grid>
             <Row>
               <Col size={3}>
@@ -253,7 +246,7 @@ export default class AwesomeProject extends Component {
               <Text style={styles.listSubtitle}>{this.state.markers[0].opening.toUpperCase()}</Text>
             </Col>
             <Col size={1}>
-              <View style={styles.rating}><Text style={{color: '#fff'}}>OOOOO</Text></View>
+              <View style={styles.rating}><Text style={styles.ratingText}>OOOOO</Text></View>
             </Col>
           </Row>
         </Grid>
@@ -275,7 +268,7 @@ export default class AwesomeProject extends Component {
         </TouchableOpacity>
       ]}
     >
-    <View style={[styles.listItem, {backgroundColor: '#A0BBC5'}]}>
+    <View style={[styles.listItem, {backgroundColor: colors.silver}]}>
       <Grid>
         <Row>
           <Col size={3}>
@@ -298,7 +291,7 @@ export default class AwesomeProject extends Component {
           <Text style={styles.listSubtitle}>{this.state.markers[1].opening.toUpperCase()}</Text>
         </Col>
         <Col size={1}>
-          <View style={styles.rating}><Text style={{color: '#fff'}}>OOOOO</Text></View>
+          <View style={styles.rating}><Text style={styles.ratingText}>OOOOO</Text></View>
         </Col>
       </Row>
     </Grid>
@@ -310,26 +303,28 @@ export default class AwesomeProject extends Component {
         onRightActionActivate={() => this.setState({rightActionActivated: true})}
         onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
         onRightActionComplete={() => this.setState({toggle: !toggle})}
-        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
-        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
-        onLeftActionComplete={() => this.setState({toggle: !toggle})}
         onRightActionRelease={() => Communications.web('geo:?q=' + this.state.markers[2].coordinate.latitude + ',' + this.state.markers[2].coordinate.longitude)}
-        rightActionActivationDistance={200}
-        onLeftActionRelease={() => Communications.phonecall(this.state.markers[2].phone,true)}
-        rightLeftActivationDistance={200}
+        rightActionActivationDistance={100}
+
         rightContent={(
-          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? 'steelblue' : '#78DCAA'}]}>
+          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#4682b4' : '#fff'}]}>
             {rightActionActivated ?
               <Icon name="map" size={32} color="#fff" /> :
-              <Icon name="map" size={32} color="#fff" />}
+              <Icon name="map" size={32} color="#4682b4" />}
           </View>
         )}
 
+        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
+        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
+        onLeftActionComplete={() => this.setState({toggle: !toggle})}
+        onLeftActionRelease={() => Communications.phonecall(this.state.markers[2].phone,true)}
+        rightLeftActivationDistance={100}
+
         leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'steelblue' : '#78DCAA'}]}>
-            {rightActionActivated ?
+          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#78DCAA' : '#fff'}]}>
+            {leftActionActivated ?
               <Icon name="phone" size={32} color="#fff" /> :
-              <Icon name="phone" size={32} color="#fff" />}
+              <Icon name="phone" size={32} color="#78DCAA" />}
           </View>
         )}
   >
@@ -357,7 +352,7 @@ export default class AwesomeProject extends Component {
         <Text style={styles.listSubtitle}>{this.state.markers[2].opening.toUpperCase()}</Text>
       </Col>
       <Col size={1}>
-        <View style={styles.rating}><Text style={{color: '#fff'}}>OOOOO</Text></View>
+        <View style={styles.rating}><Text style={styles.ratingText}>00000</Text></View>
       </Col>
     </Row>
   </Grid>

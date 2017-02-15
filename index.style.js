@@ -4,13 +4,11 @@ import ExtraDimensions from 'react-native-extra-dimensions-android';
 const { width, height } = Dimensions.get('window');
 
 export const colors = {
-    black: '#1a1917',
-    gray: '#888888',
-    gold: '#FBB91A',
-    silver: '#A0BBC5',
-    bronze: '#EB8E5B',
-    background1: '#d76736',
-    background2: 'hsl(230, 30%, 45%)'
+    black: '#333',
+    white: '#fff',
+    gray: '#fff',
+    background1: '#fff',
+    background2: '#d76736'
 };
 
 export default StyleSheet.create({
@@ -38,9 +36,6 @@ export default StyleSheet.create({
       paddingLeft: 20
     },
 
-    opening: {
-      color: '#fff'
-    },
     card : {
       width: 300,
       height: 180,
@@ -54,10 +49,10 @@ export default StyleSheet.create({
         flexDirection: 'row'
     },
     listContainer: {
-      backgroundColor: '#fff',
+      backgroundColor: colors.background1,
       margin: 10,
       borderRadius: 8,
-      borderBottomColor: '#d76736',
+      borderBottomColor: colors.background2,
       borderBottomWidth: 1,
       justifyContent: 'center',
       paddingHorizontal: 20,
@@ -88,24 +83,28 @@ export default StyleSheet.create({
       alignItems: 'flex-end',
     },
 
+    ratingText: {
+      color: colors.gray
+    },
     compassText: {
-      color: "#fff",
+      color: colors.gray,
       fontSize: 16
     },
     listTitle: {
-      fontFamily: 'Helvetica',
+      fontFamily: 'Roboto',
       fontSize: 32,
       fontWeight: 'bold',
-      color: '#fff'
+      color: colors.white
     },
     rowBack: {
       backgroundColor: 'transparent'
     },
     listSubtitle: {
       fontSize: 16,
-      color: "#fff",
+      color: colors.gray,
       position: 'absolute',
-      bottom: 0
+      bottom: 0,
+      fontFamily: "Roboto"
     },
 
     color1: {
@@ -123,7 +122,7 @@ export default StyleSheet.create({
     title: {
         marginTop: 15,
         backgroundColor: 'transparent',
-        color: '#d76736',
+        color: colors.background2,
         fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center'
@@ -132,7 +131,7 @@ export default StyleSheet.create({
         marginTop: 5,
         marginBottom: 15,
         backgroundColor: 'transparent',
-        color: '#d76736',
+        color: colors.background2,
         fontSize: 16,
         fontStyle: 'italic',
         textAlign: 'center'
