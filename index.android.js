@@ -210,7 +210,7 @@ export default class AwesomeProject extends Component {
   }
 
   render() {
-    const {rightActionActivated, toggle} = this.state;
+    const {leftActionActivated, rightActionActivated, toggle} = this.state;
     const { region } = this.props;
 
     return (
@@ -310,24 +310,28 @@ export default class AwesomeProject extends Component {
         onRightActionActivate={() => this.setState({rightActionActivated: true})}
         onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
         onRightActionComplete={() => this.setState({toggle: !toggle})}
-        onRightActionRelease={() => Communications.phonecall('0975422144', true)}
+        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
+        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
+        onLeftActionComplete={() => this.setState({toggle: !toggle})}
+        onRightActionRelease={() => Communications.web('geo:?q=' + this.state.markers[2].coordinate.latitude + ',' + this.state.markers[2].coordinate.longitude)}
         rightActionActivationDistance={200}
+        onLeftActionRelease={() => Communications.phonecall(this.state.markers[2].phone,true)}
+        rightLeftActivationDistance={200}
         rightContent={(
           <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? 'steelblue' : '#78DCAA'}]}>
+            {rightActionActivated ?
+              <Icon name="map" size={32} color="#fff" /> :
+              <Icon name="map" size={32} color="#fff" />}
+          </View>
+        )}
+
+        leftContent={(
+          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? 'steelblue' : '#78DCAA'}]}>
             {rightActionActivated ?
               <Icon name="phone" size={32} color="#fff" /> :
               <Icon name="phone" size={32} color="#fff" />}
           </View>
         )}
-
-    leftButtons={[
-      <TouchableOpacity style={[styles.leftSwipeItem, {backgroundColor: '#78DCAA'}]}>
-      <Icon name="phone" size={32} color="#fff" />
-      </TouchableOpacity>,
-      <TouchableOpacity style={[styles.leftSwipeItem, {backgroundColor: '#D92531'}]}>
-        <Icon name="heart" size={32} color="#fff" />
-      </TouchableOpacity>
-    ]}
   >
 
     <View style={[styles.listItem, {backgroundColor: '#EB8E5B'}]}>
