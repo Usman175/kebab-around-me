@@ -81,7 +81,6 @@ export default StyleSheet.create({
       justifyContent:'flex-end',
       alignItems: 'center'
     },
-
     rating: {
       flex:1,
       flexDirection:'row',

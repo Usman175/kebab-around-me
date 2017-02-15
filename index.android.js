@@ -144,6 +144,7 @@ export default class AwesomeProject extends Component {
           opening: 'open',
           phone: '0975123456',
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
+          rating: '5',
           coordinate: {
           latitude: 23,
           longitude: 120.9935022,
@@ -156,6 +157,7 @@ export default class AwesomeProject extends Component {
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'close',
           phone: '0975123456',
+          rating: '4',
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
           latitude: 24.7912387,
@@ -170,6 +172,7 @@ export default class AwesomeProject extends Component {
           opening: 'open',
           phone: '0975123456',
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
+          rating: '3.5',
           coordinate: {
           latitude: 25,
           longitude: 120.9935022,
@@ -250,6 +253,7 @@ export default class AwesomeProject extends Component {
               <Text style={styles.listSubtitle}>{this.state.markers[0].opening.toUpperCase()}</Text>
             </Col>
             <Col size={1}>
+              <View style={styles.rating}><Text style={{color: '#fff'}}>OOOOO</Text></View>
             </Col>
           </Row>
         </Grid>
@@ -294,6 +298,7 @@ export default class AwesomeProject extends Component {
           <Text style={styles.listSubtitle}>{this.state.markers[1].opening.toUpperCase()}</Text>
         </Col>
         <Col size={1}>
+          <View style={styles.rating}><Text style={{color: '#fff'}}>OOOOO</Text></View>
         </Col>
       </Row>
     </Grid>
@@ -348,6 +353,7 @@ export default class AwesomeProject extends Component {
         <Text style={styles.listSubtitle}>{this.state.markers[2].opening.toUpperCase()}</Text>
       </Col>
       <Col size={1}>
+        <View style={styles.rating}><Text style={{color: '#fff'}}>OOOOO</Text></View>
       </Col>
     </Row>
   </Grid>
