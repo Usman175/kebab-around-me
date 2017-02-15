@@ -21,7 +21,7 @@ export default StyleSheet.create({
       //paddingTop: 20
     },
     listItem: {
-      height: ExtraDimensions.get('REAL_WINDOW_HEIGHT')*0.32,
+      height: (height-ExtraDimensions.get('STATUS_BAR_HEIGHT'))*0.3333,
       padding: 30
     },
     leftSwipeItem: {
