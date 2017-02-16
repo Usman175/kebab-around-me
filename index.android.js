@@ -68,14 +68,13 @@ class Card extends Component {
     var R = 6371; // Radius of the earth in km
     var dLat = this.rad(p2.latitude-p1.latitude);  // deg2rad below
     var dLon = this.rad(p2.longitude-p1.longitude);
-    var a =
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(this.rad(p1.latitude)) * Math.cos(this.rad(p2.latitude)) *
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ;
+    var lat1 = this.rad(p1.latitude);
+    var lat2 = this.rad(p2.latitude);
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var d = R * c; // Distance in km
-    return Math.round(d); // returns the distance in meter
+    console.log(d);
+    return Math.round(d*1000); // returns the distance in meter
   }
 
   constructor(props) {
@@ -102,8 +101,8 @@ class Card extends Component {
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
           rating: 4,
           coordinate: {
-          latitude: 23,
-          longitude: 120.9935022,
+          latitude: 24.7947253,
+          longitude: 120.9932316,
           },
         },
         {
@@ -116,8 +115,8 @@ class Card extends Component {
           rating: 3.5,
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
-          latitude: 24.7912387,
-          longitude: 122,
+          latitude: 24.7890674,
+          longitude: 120.99926340000002,
           },
         },
         {
@@ -130,8 +129,8 @@ class Card extends Component {
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
           rating: 4.5,
           coordinate: {
-          latitude: 25,
-          longitude: 120.9935022,
+          latitude: 24.794252,
+          longitude: 121.000486,
           },
         },
       ]
@@ -290,7 +289,6 @@ export default class KebabAroundMe extends Component {
     return (
       <View style={styles.container}>
         <StatusBar
-          backgroundColor="#d76736"
           barStyle="light-content"
         />
         <Card color={colors.gold} index="0" />
