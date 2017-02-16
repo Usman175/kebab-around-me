@@ -57,7 +57,7 @@ const colors = {
 
 const entryBorderRadius = 5;
 
-export default class AwesomeProject extends Component {
+export default class KebabAroundMe extends Component {
 
   componentDidMount() {
 
@@ -363,4 +363,4 @@ export default class AwesomeProject extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('KebabAroundMe', () => KebabAroundMe);
