@@ -23,7 +23,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Carousel from 'react-native-snap-carousel';
 import SliderEntry from './SliderEntry';
 import styles from './index.style';
-import Compass from './Compass';
+import Compass from './compass';
 import Swipeable from 'react-native-swipeable';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Communications from 'react-native-communications';
@@ -215,7 +215,7 @@ class Card extends Component {
     );
   }
 }
-export class KebabAroundMe extends Component {
+export default class KebabAroundMe extends Component {
 
   componentDidMount() {
 
@@ -235,6 +235,7 @@ export class KebabAroundMe extends Component {
     });
 
     setTimeout(() => {
+      console.log("TOUCHED LIKE NEVER CHANGE");
       SplashScreen.hide();
     },1500);
   }
@@ -345,6 +346,10 @@ export class KebabAroundMe extends Component {
 
     return (
       <View style={styles.container}>
+        <StatusBar
+          backgroundColor="#d76736"
+          barStyle="light-content"
+        />
         <Card color={colors.gold} index="0" />
         <Card color={colors.silver} index="1" />
         <Card color={colors.bronze} index="1" />
