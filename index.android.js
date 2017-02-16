@@ -58,7 +58,164 @@ const colors = {
 
 const entryBorderRadius = 5;
 
-export default class KebabAroundMe extends Component {
+class Card extends Component {
+
+  rad(x) {
+    return x * Math.PI / 180;
+  }
+
+  getDistance(p1, p2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = this.rad(p2.latitude-p1.latitude);  // deg2rad below
+    var dLon = this.rad(p2.longitude-p1.longitude);
+    var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(this.rad(p1.latitude)) * Math.cos(this.rad(p2.latitude)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c; // Distance in km
+    return Math.round(d); // returns the distance in meter
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+      currentPosition: {lat: 0, lon: 0},
+      rightActionActivated: false,
+      toggle: false,
+      lastPosition: {
+        latitude: null,
+        longitude: null
+      },
+
+      markers: [
+        {
+          key: 0,
+          amount: 99,
+          title: 'Mister Tacos',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          opening: 'open',
+          phone: '0975123456',
+          illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
+          rating: 4,
+          coordinate: {
+          latitude: 23,
+          longitude: 120.9935022,
+          },
+        },
+        {
+          key: 1,
+          amount: 199,
+          title: 'Master Tacos',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          opening: 'close',
+          phone: '0975123456',
+          rating: 3.5,
+          illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
+          coordinate: {
+          latitude: 24.7912387,
+          longitude: 122,
+          },
+        },
+        {
+          key: 2,
+          amount: 285,
+          title: 'Hammamet',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+          opening: 'open',
+          phone: '0975123456',
+          illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
+          rating: 4.5,
+          coordinate: {
+          latitude: 25,
+          longitude: 120.9935022,
+          },
+        },
+      ]
+    };
+  }
+
+  render(){
+    const {rightActionActivated, leftActionActivated, toggle} = this.state;
+
+    return (
+      <Swipeable
+
+          onRightActionActivate={() => this.setState({rightActionActivated: true})}
+          onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
+          onRightActionComplete={() => this.setState({toggle: !toggle})}
+          onRightActionRelease={() => Communications.web('geo:?q=' + this.state.markers[this.props.index].coordinate.latitude + ',' + this.state.markers[this.props.index].coordinate.longitude)}
+          rightActionActivationDistance={100}
+
+          rightContent={(
+            <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#4682b4' : '#fff'}]}>
+              {rightActionActivated ?
+                <Icon name="map" size={32} color="#fff" /> :
+                <Icon name="map" size={32} color="#4682b4" />}
+            </View>
+          )}
+
+          onLeftActionActivate={() => this.setState({leftActionActivated: true})}
+          onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
+          onLeftActionComplete={() => this.setState({toggle: !toggle})}
+          onLeftActionRelease={() => Communications.phonecall(this.state.markers[this.props.index].phone,true)}
+          rightLeftActivationDistance={100}
+
+          leftContent={(
+            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#78DCAA' : '#fff'}]}>
+              {leftActionActivated ?
+                <Icon name="phone" size={32} color="#fff" /> :
+                <Icon name="phone" size={32} color="#78DCAA" />}
+            </View>
+          )}
+    >
+
+      <View style={[styles.listItem, {backgroundColor: this.props.color}]}>
+      <Grid>
+        <Row>
+          <Col size={3}>
+            <Text style={styles.listTitle}>{this.state.markers[this.props.index].title}</Text>
+            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[this.props.index].coordinate)}m</Text>
+          </Col>
+          <Col size={1}>
+            <View style={styles.compass}>
+            <Compass
+              fromLat={this.state.lastPosition.latitude}
+              fromLon={this.state.lastPosition.longitude}
+              toLat={this.state.markers[this.props.index].coordinate.latitude}
+              toLon={this.state.markers[this.props.index].coordinate.longitude}
+            />
+            </View>
+          </Col>
+        </Row>
+      <Row>
+        <Col size={3}>
+          <Text style={styles.listSubtitle}>{this.state.markers[this.props.index].opening.toUpperCase()}</Text>
+        </Col>
+        <Col size={1}>
+          <View style={styles.rating}>
+            <StarRating
+              disabled={true}
+              maxStars={5}
+              starSize={16}
+              starColor="#fff"
+              emptyStarColor="#fff"
+              rating={this.state.markers[this.props.index].rating}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+            />
+          </View>
+        </Col>
+      </Row>
+    </Grid>
+      </View>
+    </Swipeable>
+    );
+  }
+}
+export class KebabAroundMe extends Component {
 
   componentDidMount() {
 
@@ -98,32 +255,12 @@ export default class KebabAroundMe extends Component {
       });
   }
 
-  rad(x) {
-    return x * Math.PI / 180;
-  }
-
-  getDistance(p1, p2) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = this.rad(p2.latitude-p1.latitude);  // deg2rad below
-    var dLon = this.rad(p2.longitude-p1.longitude);
-    var a =
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(this.rad(p1.latitude)) * Math.cos(this.rad(p2.latitude)) *
-    Math.sin(dLon/2) * Math.sin(dLon/2)
-    ;
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var d = R * c; // Distance in km
-    return Math.round(d); // returns the distance in meter
-  }
-
   constructor(props) {
     super(props);
 
     this.state = {
 
       currentPosition: {lat: 0, lon: 0},
-      rightActionActivated: false,
-      toggle: false,
       lastPosition: {
         latitude: null,
         longitude: null
@@ -204,192 +341,14 @@ export default class KebabAroundMe extends Component {
   }
 
   render() {
-    const {leftActionActivated, rightActionActivated, toggle} = this.state;
     const { region } = this.props;
 
     return (
       <View style={styles.container}>
-        <Swipeable
-        leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
-            <Text>Pull action</Text>
-          </View>
-        )}
-        rightButtons={[
-          <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
-            <Text>1</Text>
-          </TouchableOpacity>,
-          <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
-            <Text>2</Text>
-          </TouchableOpacity>
-        ]}
-      >
-        <View style={[styles.listItem, {backgroundColor: colors.gold}]}>
-          <Grid>
-            <Row>
-              <Col size={3}>
-                <Text style={styles.listTitle}>{this.state.markers[0].title}</Text>
-                <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[0].coordinate)}m</Text>
-              </Col>
-              <Col size={1}>
-                <View style={styles.compass}>
-                <Compass
-                  fromLat={this.state.lastPosition.latitude}
-                  fromLon={this.state.lastPosition.longitude}
-                  toLat={this.state.markers[0].coordinate.latitude}
-                  toLon={this.state.markers[0].coordinate.longitude}
-                />
-                </View>
-              </Col>
-            </Row>
-          <Row>
-            <Col size={3}>
-              <Text style={styles.listSubtitle}>{this.state.markers[0].opening.toUpperCase()}</Text>
-            </Col>
-            <Col size={1}>
-              <View style={styles.rating}>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  starSize={16}
-                  starColor="#fff"
-                  emptyStarColor="#fff"
-                  rating={this.state.markers[0].rating}
-                  selectedStar={(rating) => this.onStarRatingPress(rating)}
-                />
-              </View>
-            </Col>
-          </Row>
-        </Grid>
+        <Card color={colors.gold} index="0" />
+        <Card color={colors.silver} index="1" />
+        <Card color={colors.bronze} index="1" />
       </View>
-    </Swipeable>
-
-      <Swipeable
-      leftContent={(
-        <View style={[styles.leftSwipeItem, {backgroundColor: 'lightskyblue'}]}>
-          <Text>Pull action</Text>
-        </View>
-      )}
-      rightButtons={[
-        <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'lightseagreen'}]}>
-          <Text>1</Text>
-        </TouchableOpacity>,
-        <TouchableOpacity style={[styles.rightSwipeItem, {backgroundColor: 'orchid'}]}>
-          <Text>2</Text>
-        </TouchableOpacity>
-      ]}
-    >
-    <View style={[styles.listItem, {backgroundColor: colors.silver}]}>
-      <Grid>
-        <Row>
-          <Col size={3}>
-            <Text style={styles.listTitle}>{this.state.markers[1].title}</Text>
-            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
-          </Col>
-          <Col size={1}>
-            <View style={styles.compass}>
-            <Compass
-              fromLat={this.state.lastPosition.latitude}
-              fromLon={this.state.lastPosition.longitude}
-              toLat={this.state.markers[1].coordinate.latitude}
-              toLon={this.state.markers[1].coordinate.longitude}
-            />
-            </View>
-          </Col>
-        </Row>
-      <Row>
-        <Col size={3}>
-          <Text style={styles.listSubtitle}>{this.state.markers[1].opening.toUpperCase()}</Text>
-        </Col>
-        <Col size={1}>
-          <View style={styles.rating}>
-            <StarRating
-              disabled={true}
-              maxStars={5}
-              starSize={16}
-              starColor={"#fff"}
-              emptyStarColor={"#fff"}
-              rating={this.state.markers[1].rating}
-              selectedStar={(rating) => this.onStarRatingPress(rating)}
-            />
-          </View>
-        </Col>
-      </Row>
-    </Grid>
-  </View>
-    </Swipeable>
-
-    <Swipeable
-
-        onRightActionActivate={() => this.setState({rightActionActivated: true})}
-        onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
-        onRightActionComplete={() => this.setState({toggle: !toggle})}
-        onRightActionRelease={() => Communications.web('geo:?q=' + this.state.markers[2].coordinate.latitude + ',' + this.state.markers[2].coordinate.longitude)}
-        rightActionActivationDistance={100}
-
-        rightContent={(
-          <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#4682b4' : '#fff'}]}>
-            {rightActionActivated ?
-              <Icon name="map" size={32} color="#fff" /> :
-              <Icon name="map" size={32} color="#4682b4" />}
-          </View>
-        )}
-
-        onLeftActionActivate={() => this.setState({leftActionActivated: true})}
-        onLeftActionDeactivate={() => this.setState({leftActionActivated: false})}
-        onLeftActionComplete={() => this.setState({toggle: !toggle})}
-        onLeftActionRelease={() => Communications.phonecall(this.state.markers[2].phone,true)}
-        rightLeftActivationDistance={100}
-
-        leftContent={(
-          <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#78DCAA' : '#fff'}]}>
-            {leftActionActivated ?
-              <Icon name="phone" size={32} color="#fff" /> :
-              <Icon name="phone" size={32} color="#78DCAA" />}
-          </View>
-        )}
-  >
-
-    <View style={[styles.listItem, {backgroundColor: '#EB8E5B'}]}>
-    <Grid>
-      <Row>
-        <Col size={3}>
-          <Text style={styles.listTitle}>{this.state.markers[2].title}</Text>
-          <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[1].coordinate)}m</Text>
-        </Col>
-        <Col size={1}>
-          <View style={styles.compass}>
-          <Compass
-            fromLat={this.state.lastPosition.latitude}
-            fromLon={this.state.lastPosition.longitude}
-            toLat={this.state.markers[2].coordinate.latitude}
-            toLon={this.state.markers[2].coordinate.longitude}
-          />
-          </View>
-        </Col>
-      </Row>
-    <Row>
-      <Col size={3}>
-        <Text style={styles.listSubtitle}>{this.state.markers[2].opening.toUpperCase()}</Text>
-      </Col>
-      <Col size={1}>
-        <View style={styles.rating}>
-          <StarRating
-            disabled={true}
-            maxStars={5}
-            starSize={16}
-            starColor="#fff"
-            emptyStarColor="#fff"
-            rating={this.state.markers[2].rating}
-            selectedStar={(rating) => this.onStarRatingPress(rating)}
-          />
-        </View>
-      </Col>
-    </Row>
-  </Grid>
-    </View>
-  </Swipeable>
-</View>
     );
   }
 }
