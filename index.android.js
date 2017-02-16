@@ -138,9 +138,26 @@ class Card extends Component {
     };
   }
 
+  componentDidMount(){
+    navigator.geolocation.getCurrentPosition( (position) => {
+      var initialPosition = JSON.stringify(position);
+      this.setState({initialPosition});
+    }
+    , (error) => console.log(JSON.stringify(error)),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      var lastPosition = JSON.stringify(position);
+      this.setState({lastPosition: {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }});
+      console.log("GPS: " + this.state.lastPosition);
+    });
+  }
+
   render(){
     const {rightActionActivated, leftActionActivated, toggle} = this.state;
-
     return (
       <Swipeable
 
@@ -215,29 +232,13 @@ class Card extends Component {
     );
   }
 }
+
 export default class KebabAroundMe extends Component {
 
   componentDidMount() {
-
-    navigator.geolocation.getCurrentPosition( (position) => {
-      var initialPosition = JSON.stringify(position);
-      this.setState({initialPosition});
-    }
-    , (error) => console.log(JSON.stringify(error)),
-    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-    this.watchID = navigator.geolocation.watchPosition((position) => {
-    var lastPosition = JSON.stringify(position);
-    this.setState({lastPosition: {
-    latitude: position.coords.latitude,
-    longitude: position.coords.longitude
-    }});
-    });
-
     setTimeout(() => {
-      console.log("TOUCHED LIKE NEVER CHANGE");
       SplashScreen.hide();
-    },1500);
+    },1000);
   }
 
   getSlides (entries) {
@@ -254,64 +255,6 @@ export default class KebabAroundMe extends Component {
               />
           );
       });
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-      currentPosition: {lat: 0, lon: 0},
-      lastPosition: {
-        latitude: null,
-        longitude: null
-      },
-
-      markers: [
-        {
-          key: 0,
-          amount: 99,
-          title: 'Mister Tacos',
-          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'open',
-          phone: '0975123456',
-          illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
-          rating: 4,
-          coordinate: {
-          latitude: 23,
-          longitude: 120.9935022,
-          },
-        },
-        {
-          key: 1,
-          amount: 199,
-          title: 'Master Tacos',
-          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'close',
-          phone: '0975123456',
-          rating: 3.5,
-          illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
-          coordinate: {
-          latitude: 24.7912387,
-          longitude: 122,
-          },
-        },
-        {
-          key: 2,
-          amount: 285,
-          title: 'Hammamet',
-          subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'open',
-          phone: '0975123456',
-          illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
-          rating: 4.5,
-          coordinate: {
-          latitude: 25,
-          longitude: 120.9935022,
-          },
-        },
-      ]
-    };
   }
 
   componentWillUnmount() {
@@ -352,7 +295,7 @@ export default class KebabAroundMe extends Component {
         />
         <Card color={colors.gold} index="0" />
         <Card color={colors.silver} index="1" />
-        <Card color={colors.bronze} index="1" />
+        <Card color={colors.bronze} index="2" />
       </View>
     );
   }
