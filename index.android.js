@@ -27,6 +27,7 @@ import Compass from './Compass';
 import Swipeable from 'react-native-swipeable';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Communications from 'react-native-communications';
+import StarRating from 'react-native-star-rating';
 
 const { width, height } = Dimensions.get('window');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -137,7 +138,7 @@ export default class KebabAroundMe extends Component {
           opening: 'open',
           phone: '0975123456',
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
-          rating: '5',
+          rating: 4,
           coordinate: {
           latitude: 23,
           longitude: 120.9935022,
@@ -150,7 +151,7 @@ export default class KebabAroundMe extends Component {
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'close',
           phone: '0975123456',
-          rating: '4',
+          rating: 3.5,
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
           latitude: 24.7912387,
@@ -165,7 +166,7 @@ export default class KebabAroundMe extends Component {
           opening: 'open',
           phone: '0975123456',
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
-          rating: '3.5',
+          rating: 4.5,
           coordinate: {
           latitude: 25,
           longitude: 120.9935022,
@@ -246,7 +247,17 @@ export default class KebabAroundMe extends Component {
               <Text style={styles.listSubtitle}>{this.state.markers[0].opening.toUpperCase()}</Text>
             </Col>
             <Col size={1}>
-              <View style={styles.rating}><Text style={styles.ratingText}>OOOOO</Text></View>
+              <View style={styles.rating}>
+                <StarRating
+                  disabled={true}
+                  maxStars={5}
+                  starSize={16}
+                  starColor="#fff"
+                  emptyStarColor="#fff"
+                  rating={this.state.markers[0].rating}
+                  selectedStar={(rating) => this.onStarRatingPress(rating)}
+                />
+              </View>
             </Col>
           </Row>
         </Grid>
@@ -291,7 +302,17 @@ export default class KebabAroundMe extends Component {
           <Text style={styles.listSubtitle}>{this.state.markers[1].opening.toUpperCase()}</Text>
         </Col>
         <Col size={1}>
-          <View style={styles.rating}><Text style={styles.ratingText}>OOOOO</Text></View>
+          <View style={styles.rating}>
+            <StarRating
+              disabled={true}
+              maxStars={5}
+              starSize={16}
+              starColor={"#fff"}
+              emptyStarColor={"#fff"}
+              rating={this.state.markers[1].rating}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+            />
+          </View>
         </Col>
       </Row>
     </Grid>
@@ -352,7 +373,17 @@ export default class KebabAroundMe extends Component {
         <Text style={styles.listSubtitle}>{this.state.markers[2].opening.toUpperCase()}</Text>
       </Col>
       <Col size={1}>
-        <View style={styles.rating}><Text style={styles.ratingText}>00000</Text></View>
+        <View style={styles.rating}>
+          <StarRating
+            disabled={true}
+            maxStars={5}
+            starSize={16}
+            starColor="#fff"
+            emptyStarColor="#fff"
+            rating={this.state.markers[2].rating}
+            selectedStar={(rating) => this.onStarRatingPress(rating)}
+          />
+        </View>
       </Col>
     </Row>
   </Grid>

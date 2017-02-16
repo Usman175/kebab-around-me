@@ -81,6 +81,7 @@ export default StyleSheet.create({
       flexDirection:'row',
       justifyContent:'flex-end',
       alignItems: 'flex-end',
+      paddingBottom: 5
     },
 
     ratingText: {
