@@ -110,7 +110,7 @@ class Card extends Component {
           amount: 199,
           title: 'Master Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'close',
+          opening: 'closed',
           phone: '0975123456',
           rating: 3.5,
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
@@ -130,7 +130,7 @@ class Card extends Component {
           rating: 4.5,
           coordinate: {
           latitude: 24.794252,
-          longitude: 121.000486,
+          longitude: 121.00048600000002,
           },
         },
       ]
