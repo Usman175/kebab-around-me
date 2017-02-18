@@ -12,11 +12,6 @@ react-native run-android
 
 See [Setup Instructions for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
 
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 * [React Native](https://facebook.github.io/react-native/) - The library used
