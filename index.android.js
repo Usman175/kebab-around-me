@@ -176,10 +176,10 @@ class Card extends Component {
           rightActionActivationDistance={100}
 
           rightContent={(
-            <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#4682b4' : '#fff'}]}>
+            <View style={[styles.rightSwipeItem, {backgroundColor: rightActionActivated ? '#CC4211' : '#CC4211'}]}>
               {rightActionActivated ?
                 <Icon name="map" size={32} color="#fff" /> :
-                <Icon name="map" size={32} color="#4682b4" />}
+                <Icon name="map" size={32} color="#fff" />}
             </View>
           )}
 
@@ -190,7 +190,7 @@ class Card extends Component {
           rightLeftActivationDistance={100}
 
           leftContent={(
-            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#78DCAA' : '#78DCAA'}]}>
+            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#A1C33B' : '#A1C33B'}]}>
               {leftActionActivated ?
                 <Icon name="phone" size={32} color="#fff" /> :
                 <Icon name="phone" size={32} color="#fff" />}
