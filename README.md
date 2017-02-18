@@ -1,4 +1,4 @@
-# Project Title
+# Kebab Around Me
 
 A cool Android APP to find the 3 best Kebab restaurants around your current location
 
