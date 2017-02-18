@@ -66,7 +66,14 @@ export default StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-
+    backgroundImage: {
+      flex: 1,
+      width: undefined,
+      height: undefined,
+      backgroundColor:'transparent',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     carousel: {
       flex: 0
     },
@@ -90,6 +97,7 @@ export default StyleSheet.create({
     compassText: {
       color: colors.gray,
       fontSize: 16
+
     },
     listTitle: {
       fontFamily: 'Roboto',

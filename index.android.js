@@ -52,9 +52,9 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const DEFAULT_PADDING = { top: 40, right: 40, bottom: 40, left: 40 };
 const colors = {
-    gold: '#FBB91A',
-    silver: '#A0BBC5',
-    bronze: '#EB8E5B'}
+    gold: 'rgba(232,160,5,0.8)',
+    silver: 'rgba(135,160,168,0.8)',
+    bronze: 'rgba(188,107,76,0.8)'}
 
 const entryBorderRadius = 5;
 
@@ -158,6 +158,15 @@ class Card extends Component {
   render(){
     const {rightActionActivated, leftActionActivated, toggle} = this.state;
     return (
+      <Image
+        style={{
+          flex: 1,
+          alignSelf: 'stretch',
+          width: undefined,
+          height: undefined
+        }}
+        source={{uri: this.state.markers[this.props.index].illustration}}
+      >
       <Swipeable
 
           onRightActionActivate={() => this.setState({rightActionActivated: true})}
@@ -181,53 +190,53 @@ class Card extends Component {
           rightLeftActivationDistance={100}
 
           leftContent={(
-            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#78DCAA' : '#fff'}]}>
+            <View style={[styles.leftSwipeItem, {backgroundColor: leftActionActivated ? '#78DCAA' : '#78DCAA'}]}>
               {leftActionActivated ?
                 <Icon name="phone" size={32} color="#fff" /> :
-                <Icon name="phone" size={32} color="#78DCAA" />}
+                <Icon name="phone" size={32} color="#fff" />}
             </View>
           )}
     >
-
-      <View style={[styles.listItem, {backgroundColor: this.props.color}]}>
-      <Grid>
-        <Row>
-          <Col size={3}>
-            <Text style={styles.listTitle}>{this.state.markers[this.props.index].title}</Text>
-            <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[this.props.index].coordinate)}m</Text>
-          </Col>
-          <Col size={1}>
-            <View style={styles.compass}>
-            <Compass
-              fromLat={this.state.lastPosition.latitude}
-              fromLon={this.state.lastPosition.longitude}
-              toLat={this.state.markers[this.props.index].coordinate.latitude}
-              toLon={this.state.markers[this.props.index].coordinate.longitude}
-            />
-            </View>
-          </Col>
-        </Row>
-      <Row>
-        <Col size={3}>
-          <Text style={styles.listSubtitle}>{this.state.markers[this.props.index].opening.toUpperCase()}</Text>
-        </Col>
-        <Col size={1}>
-          <View style={styles.rating}>
-            <StarRating
-              disabled={true}
-              maxStars={5}
-              starSize={16}
-              starColor="#fff"
-              emptyStarColor="#fff"
-              rating={this.state.markers[this.props.index].rating}
-              selectedStar={(rating) => this.onStarRatingPress(rating)}
-            />
-          </View>
-        </Col>
-      </Row>
-    </Grid>
+        <View style={[styles.listItem, {backgroundColor: this.props.color}]}>
+          <Grid>
+            <Row>
+              <Col size={3}>
+                <Text style={styles.listTitle}>{this.state.markers[this.props.index].title}</Text>
+                <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[this.props.index].coordinate)}m</Text>
+              </Col>
+              <Col size={1}>
+                <View style={styles.compass}>
+                <Compass
+                  fromLat={this.state.lastPosition.latitude}
+                  fromLon={this.state.lastPosition.longitude}
+                  toLat={this.state.markers[this.props.index].coordinate.latitude}
+                  toLon={this.state.markers[this.props.index].coordinate.longitude}
+                />
+                </View>
+              </Col>
+            </Row>
+          <Row>
+            <Col size={3}>
+              <Text style={styles.listSubtitle}>{this.state.markers[this.props.index].opening.toUpperCase()}</Text>
+            </Col>
+            <Col size={1}>
+              <View style={styles.rating}>
+                <StarRating
+                  disabled={true}
+                  maxStars={5}
+                  starSize={16}
+                  starColor="#fff"
+                  emptyStarColor="#fff"
+                  rating={this.state.markers[this.props.index].rating}
+                  selectedStar={(rating) => this.onStarRatingPress(rating)}
+                />
+              </View>
+            </Col>
+          </Row>
+        </Grid>
       </View>
     </Swipeable>
+        </Image>
     );
   }
 }
@@ -237,7 +246,7 @@ export default class KebabAroundMe extends Component {
   componentDidMount() {
     setTimeout(() => {
       SplashScreen.hide();
-    },1000);
+    },1250);
   }
 
   getSlides (entries) {
