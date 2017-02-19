@@ -17,10 +17,12 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 export default class Card extends Component {
 
+  //convert to radian
   rad(x) {
     return x * Math.PI / 180;
   }
 
+  //distance between 2 points (longitude/latitude)
   getDistance(p1, p2) {
     var R = 6371; // Radius of the earth in km
     var dLat = this.rad(p2.latitude-p1.latitude);  // deg2rad below
@@ -124,8 +126,7 @@ export default class Card extends Component {
         }}
         source={{uri: this.state.markers[this.props.index].illustration}}
       >
-      <Swipeable
-
+        <Swipeable
           onRightActionActivate={() => this.setState({rightActionActivated: true})}
           onRightActionDeactivate={() => this.setState({rightActionActivated: false})}
           onRightActionComplete={() => this.setState({toggle: !toggle})}
@@ -153,47 +154,47 @@ export default class Card extends Component {
                 <Icon name="phone" size={32} color="#fff" />}
             </View>
           )}
-    >
-        <View style={[styles.listItem, {backgroundColor: this.props.color}]}>
-          <Grid>
+        >
+          <View style={[styles.cards, {backgroundColor: this.props.color}]}>
+            <Grid>
+              <Row>
+                <Col size={3}>
+                  <Text style={styles.title}>{this.state.markers[this.props.index].title}</Text>
+                  <Text style={styles.distance}>{this.getDistance(this.state.lastPosition,this.state.markers[this.props.index].coordinate)}m</Text>
+                </Col>
+                <Col size={1}>
+                  <View style={styles.compass}>
+                    <Compass
+                      fromLat={this.state.lastPosition.latitude}
+                      fromLon={this.state.lastPosition.longitude}
+                      toLat={this.state.markers[this.props.index].coordinate.latitude}
+                      toLon={this.state.markers[this.props.index].coordinate.longitude}
+                    />
+                  </View>
+                </Col>
+              </Row>
             <Row>
               <Col size={3}>
-                <Text style={styles.listTitle}>{this.state.markers[this.props.index].title}</Text>
-                <Text style={styles.compassText}>{this.getDistance(this.state.lastPosition,this.state.markers[this.props.index].coordinate)}m</Text>
+                <Text style={styles.schedule}>{this.state.markers[this.props.index].opening.toUpperCase()}</Text>
               </Col>
               <Col size={1}>
-                <View style={styles.compass}>
-                <Compass
-                  fromLat={this.state.lastPosition.latitude}
-                  fromLon={this.state.lastPosition.longitude}
-                  toLat={this.state.markers[this.props.index].coordinate.latitude}
-                  toLon={this.state.markers[this.props.index].coordinate.longitude}
-                />
+                <View style={styles.rating}>
+                  <StarRating
+                    disabled={true}
+                    maxStars={5}
+                    starSize={16}
+                    starColor="#fff"
+                    emptyStarColor="#fff"
+                    rating={this.state.markers[this.props.index].rating}
+                    selectedStar={(rating) => this.onStarRatingPress(rating)}
+                  />
                 </View>
               </Col>
             </Row>
-          <Row>
-            <Col size={3}>
-              <Text style={styles.listSubtitle}>{this.state.markers[this.props.index].opening.toUpperCase()}</Text>
-            </Col>
-            <Col size={1}>
-              <View style={styles.rating}>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  starSize={16}
-                  starColor="#fff"
-                  emptyStarColor="#fff"
-                  rating={this.state.markers[this.props.index].rating}
-                  selectedStar={(rating) => this.onStarRatingPress(rating)}
-                />
-              </View>
-            </Col>
-          </Row>
-        </Grid>
-      </View>
-    </Swipeable>
-        </Image>
+          </Grid>
+        </View>
+      </Swipeable>
+    </Image>
     );
   }
 }
