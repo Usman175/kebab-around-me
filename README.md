@@ -41,7 +41,7 @@ Swipe right to call the restaurant.
 
 Swipe left to open Google Maps and point the restaurant's position.
 
-<img alt="Moving to the restaurant" src="http://i.imgur.com/iKCJZ5P.gif">
+<img alt="Moving to the restaurant" src="http://i.imgur.com/poBeBfN.gif" width="256">
 
 ## Built With
 
