@@ -1,6 +1,6 @@
 # Kebab Around Me
 
-A cool Android APP to find the 3 best Kebab restaurants around your current location
+A cool Android APP to find the 3 best Kebab restaurants around your current location, build with [React Native](https://facebook.github.io/react-native/).
 
 ## Getting Started
 
@@ -17,6 +17,7 @@ See [Setup Instructions for React Native](https://facebook.github.io/react-nativ
 ### General Informations
 
 The main screen is giving you general informations for each restaurant :
+
 - restaurant's name
 - distance from your current position
 - average rating
@@ -40,7 +41,7 @@ Swipe right to call the restaurant.
 
 Swipe left to open Google Maps and point the restaurant's position.
 
-<img alt="Moving to the restaurant" src="http://i.imgur.com/sCqgK2z.gif" width="256">
+<img alt="Moving to the restaurant" src="http://i.imgur.com/iKCJZ5P.gif">
 
 ## Built With
 
