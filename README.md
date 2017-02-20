@@ -12,6 +12,31 @@ react-native run-android
 
 See [Setup Instructions for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
 
+## Features
+
+### General Informations
+
+The main screen is giving you general informations for each restaurant :
+- restaurant's name
+- distance from your current position
+- average rating
+- opening hours
+
+### Direction
+
+Also, the direction from your current position
+![Direction arrow](http://i.imgur.com/3Lpd9rY.gif)
+
+### Calling a Restaurant
+
+Swipe right to call the restaurant
+![Call the restaurant](http://i.imgur.com/4SBa62s.gifv)
+
+### Move to a Restaurant
+
+Swipe left to open Google Maps and point the restaurant's position
+![Move to the restaurant](http://i.imgur.com/sCqgK2z.gif)
+
 ## Built With
 
 * [React Native](https://facebook.github.io/react-native/) - The library used
