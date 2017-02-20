@@ -24,18 +24,20 @@ The main screen is giving you general informations for each restaurant :
 
 ### Direction
 
-Also, the direction from your current position
-![Direction arrow](http://i.imgur.com/3Lpd9rY.gif)
+Also, the direction from your current position.
+<img alt="Direction arrow" src="http://i.imgur.com/3Lpd9rY.gif" width="128">
+
 
 ### Calling a Restaurant
 
-Swipe right to call the restaurant
-![Call the restaurant](http://i.imgur.com/4SBa62s.gifv)
+Swipe right to call the restaurant.
+<img alt="Call the restaurant" src="http://i.imgur.com/4SBa62s.gif" width="128">
 
-### Move to a Restaurant
 
-Swipe left to open Google Maps and point the restaurant's position
-![Move to the restaurant](http://i.imgur.com/sCqgK2z.gif)
+### Moving to a Restaurant
+
+Swipe left to open Google Maps and point the restaurant's position.
+<img alt="Moving to the restaurant" src="http://i.imgur.com/sCqgK2z.gif" width="128">
 
 ## Built With
 
