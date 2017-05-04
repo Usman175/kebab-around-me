@@ -7,8 +7,8 @@ import {
   Dimensions,
   View
 } from 'react-native';
-import styles from './index.style';
-import Compass from './compass';
+import styles from './styles.js';
+import Compass from '../../compass';
 import Swipeable from 'react-native-swipeable';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Communications from 'react-native-communications';
@@ -32,8 +32,19 @@ export default class Card extends Component {
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var d = R * c; // Distance in km
-    console.log(d);
+    //console.log(d);
     return Math.round(d*1000); // returns the distance in meter
+  }
+
+  getShop() {
+   return fetch('http://27.246.160.229:5000/kam?long=4.897194099999979&lat=45.770803')
+     .then((response) => response.json())
+     .then((responseJson) => {
+       return responseJson;
+     })
+     .catch((error) => {
+       console.error(error);
+     });
   }
 
   constructor(props) {
@@ -44,11 +55,11 @@ export default class Card extends Component {
       currentPosition: {lat: 0, lon: 0},
       rightActionActivated: false,
       toggle: false,
+      shops: [],
       lastPosition: {
         latitude: null,
         longitude: null
       },
-
       markers: [
         {
           key: 0,
@@ -56,9 +67,9 @@ export default class Card extends Component {
           title: 'Mister Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'open',
-          phone: '0975123456',
+          phone: '0975189425',
           illustration: 'http://www.petitpaume.com/sites/default/files/styles/page/public/visuel/mister.jpg',
-          rating: 4,
+          rating: 4.5,
           coordinate: {
           latitude: 24.7947253,
           longitude: 120.9932316,
@@ -69,9 +80,9 @@ export default class Card extends Component {
           amount: 199,
           title: 'Master Tacos',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-          opening: 'closed',
-          phone: '0975123456',
-          rating: 3.5,
+          opening: 'closing soon',
+          phone: '0975189425',
+          rating: 4,
           illustration: 'https://s3-media1.fl.yelpcdn.com/ephoto/jvT42yLOqRnOndH1oOd6ug/o.jpg',
           coordinate: {
           latitude: 24.7890674,
@@ -84,9 +95,9 @@ export default class Card extends Component {
           title: 'Hammamet',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
           opening: 'open',
-          phone: '0975123456',
+          phone: '0975189425',
           illustration: 'https://media-cdn.tripadvisor.com/media/photo-s/0d/56/c6/0c/restaurant-hamamet-tacos.jpg',
-          rating: 4.5,
+          rating: 4,
           coordinate: {
           latitude: 24.794252,
           longitude: 121.00048600000002,
@@ -110,12 +121,12 @@ export default class Card extends Component {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       }});
-      console.log("GPS: " + this.state.lastPosition);
     });
   }
 
   render(){
     const {rightActionActivated, leftActionActivated, toggle} = this.state;
+    console.log("Shops:" + this.getShop());
     return (
       <Image
         style={{
@@ -164,6 +175,7 @@ export default class Card extends Component {
                 </Col>
                 <Col size={1}>
                   <View style={styles.compass}>
+
                     <Compass
                       fromLat={this.state.lastPosition.latitude}
                       fromLon={this.state.lastPosition.longitude}
