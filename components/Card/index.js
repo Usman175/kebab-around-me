@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import styles from './styles.js';
-import Compass from '../../compass';
+import Compass from '../Compass';
 import Swipeable from 'react-native-swipeable';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import Communications from 'react-native-communications';

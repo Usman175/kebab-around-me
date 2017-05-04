@@ -6,6 +6,7 @@ import {
   DeviceEventEmitter
 } from 'react-native';
 import ReactNativeHeading from 'react-native-heading';
+import styles from './styles.js';
 
 export default class Compass extends Component {
 
@@ -96,16 +97,9 @@ export default class Compass extends Component {
       inputRange:[0, 360],
       outputRange: ['0 deg', '360 deg']
     })}]}]}
-      source={require('./img/arrow.png')}
+      source={require('../../image/arrow.png')}
     />);
   }
 }
-
-const styles = StyleSheet.create({
-  compass: {
-    width: 42,
-    height: 42
-  }
-});
 
 module.exports = Compass;
