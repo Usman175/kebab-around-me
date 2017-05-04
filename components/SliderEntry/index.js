@@ -7,12 +7,11 @@ export default class SliderEntry extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         subtitle: PropTypes.string,
-        illustration: PropTypes.string,
-        even: PropTypes.bool
+        illustration: PropTypes.string
     };
 
     render () {
-        const { title, subtitle, illustration, even } = this.props;
+        const { title, subtitle, illustration} = this.props;
 
         const uppercaseTitle = title ? (
             <Text style={styles.title} numberOfLines={2}>{ title.toUpperCase() }</Text>
