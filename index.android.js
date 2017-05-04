@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 
 import SplashScreen from 'react-native-splash-screen'
-import Card from './card';
+import Card from './components/Card';
 import styles from './index.style';
 
 const { width, height } = Dimensions.get('window');
