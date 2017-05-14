@@ -37,30 +37,17 @@ export default class Card extends Component {
   }
 
   getShop() {
-   return fetch('http://27.246.160.229:5000/kam?long=4.897194099999979&lat=45.770803')
-     .then((response) => response.json())
-     .then((responseJson) => {
-       return responseJson;
-     })
-     .catch((error) => {
-       console.error(error);
-     });
-  }
+    fetch('http://e839e94a.ngrok.io/kam?long=4.897194099999979&lat=45.770803')
+       .then(function(response) {
+         //return response.json();
+         console.log("fetch:")
+         //console.log(response._bodyInit);
+       })
+       .catch((error) => {
+         console.error(error);
+    });
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-      currentPosition: {lat: 0, lon: 0},
-      rightActionActivated: false,
-      toggle: false,
-      shops: [],
-      lastPosition: {
-        latitude: null,
-        longitude: null
-      },
-      markers: [
+    return [
         {
           key: 0,
           amount: 99,
@@ -103,7 +90,22 @@ export default class Card extends Component {
           longitude: 121.00048600000002,
           },
         },
-      ]
+      ];
+     }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentPosition: {lat: 0, lon: 0},
+      rightActionActivated: false,
+      toggle: false,
+      shops: [],
+      lastPosition: {
+        latitude: null,
+        longitude: null
+      },
+      markers: this.getShop()
     };
   }
 
@@ -126,7 +128,8 @@ export default class Card extends Component {
 
   render(){
     const {rightActionActivated, leftActionActivated, toggle} = this.state;
-    console.log("Shops:" + this.getShop());
+    //console.log("Shops:");
+    console.log(this.state.markers.length);
     return (
       <Image
         style={{
@@ -135,7 +138,7 @@ export default class Card extends Component {
           width: undefined,
           height: undefined
         }}
-        source={{uri: this.state.markers[this.props.index].illustration}}
+        //source={{uri: this.state.markers[this.props.index].icon}}
       >
         <Swipeable
           onRightActionActivate={() => this.setState({rightActionActivated: true})}
@@ -170,7 +173,7 @@ export default class Card extends Component {
             <Grid>
               <Row>
                 <Col size={3}>
-                  <Text style={styles.title}>{this.state.markers[this.props.index].title}</Text>
+                  <Text style={styles.title}>{this.state.markers[this.props.index].name}</Text>
                   <Text style={styles.distance}>{this.getDistance(this.state.lastPosition,this.state.markers[this.props.index].coordinate)}m</Text>
                 </Col>
                 <Col size={1}>
