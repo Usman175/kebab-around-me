@@ -1,4 +1,4 @@
-# Kebab Around Me
+# Snack Around Me
 
 A cool Android APP to find the 3 best Kebab restaurants around your current location, build with [React Native](https://facebook.github.io/react-native/).
 
